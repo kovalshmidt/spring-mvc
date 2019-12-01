@@ -1,0 +1,25 @@
+{
+  "phoneDirectory": [
+    {
+      "fullName": "Vitaliy Kovalevskyy",
+      "phoneNumbersInfo": {
+        "380730214599": "lifecell",
+        "380970222306": "kyivstar",
+        "380660430300": "vodafone"
+      }
+    },
+    {
+      "fullName": "Prytula Andriy",
+      "phoneNumbersInfo": {
+        "380950200311": "vodafone",
+        "380630214312": "kyivstar"
+      }
+    },
+    {
+      "fullName": "Melnyk Sergiy",
+      "phoneNumbersInfo": {
+        "380730347355": "lifecell"
+      }
+    }
+  ]
+}
