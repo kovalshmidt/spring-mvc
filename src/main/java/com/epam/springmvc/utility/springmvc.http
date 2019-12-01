@@ -10,11 +10,3 @@ GET {{host-url}}/users
 #Get user with id 1
 GET {{host-url}}/user/1
 ###
-
-#Get page to add user with phone info
-GET {{host-url}}/addUser
-###
-
-#Get PDF of users
-GET {{host-url}}/getPdf
-###
