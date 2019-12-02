@@ -22,4 +22,8 @@ public interface PhoneNumberService {
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
     List<PhoneNumber> getPhoneNumbersByUserId(int userId);
+
+    PhoneNumber getPhoneNumberByValue(String phoneNumber);
+
+    boolean checkIfExistsByValue(String phoneNumberValue);
 }

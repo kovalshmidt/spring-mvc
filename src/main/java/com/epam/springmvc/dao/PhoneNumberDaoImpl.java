@@ -2,7 +2,9 @@ package com.epam.springmvc.dao;
 
 import com.epam.springmvc.mapper.PhoneNumberMapper;
 import com.epam.springmvc.model.PhoneNumber;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -13,6 +15,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Repository
 public class PhoneNumberDaoImpl implements PhoneNumberDao {
 
@@ -81,5 +84,22 @@ public class PhoneNumberDaoImpl implements PhoneNumberDao {
     public List<PhoneNumber> getPhoneNumberByUserId(int userId) {
         String sql = "SELECT * FROM phoneNumber WHERE users_id = ?";
         return jdbcTemplate.query(sql, new PhoneNumberMapper(), userId);
+    }
+
+    @Override
+    public PhoneNumber getPhoneNumberByValue(String phoneNumberValue) {
+        String sql = "SELECT * FROM phoneNumber WHERE phoneNumber = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new PhoneNumberMapper(), phoneNumberValue);
+        } catch (EmptyResultDataAccessException e) {
+            log.warn("No rows found with such phone number: " + phoneNumberValue);
+            return null;
+        }
+    }
+
+    @Override
+    public int checkIfExistsByValue(String phoneNumberValue) {
+        String sql = "SELECT COUNT(1) FROM phoneNumber WHERE phoneNumber = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumberValue);
     }
 }

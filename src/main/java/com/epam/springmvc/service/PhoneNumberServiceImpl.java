@@ -57,4 +57,14 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     public List<PhoneNumber> getPhoneNumbersByUserId(int userId) {
         return phoneNumberDao.getPhoneNumberByUserId(userId);
     }
+
+    @Override
+    public PhoneNumber getPhoneNumberByValue(String phoneNumber) {
+        return phoneNumberDao.getPhoneNumberByValue(phoneNumber);
+    }
+
+    @Override
+    public boolean checkIfExistsByValue(String phoneNumberValue) {
+        return phoneNumberDao.checkIfExistsByValue(phoneNumberValue) == 1;
+    }
 }

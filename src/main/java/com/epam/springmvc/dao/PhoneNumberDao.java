@@ -24,4 +24,8 @@ public interface PhoneNumberDao {
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
     List<PhoneNumber> getPhoneNumberByUserId(int userId);
+
+    PhoneNumber getPhoneNumberByValue(String phoneNumberValue);
+
+    int checkIfExistsByValue(String phoneNumberValue);
 }
