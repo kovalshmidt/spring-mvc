@@ -3,6 +3,7 @@ package com.epam.springmvc.service;
 import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneNumber;
 import com.epam.springmvc.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class UploadServiceImpl implements UploadService {
 
@@ -38,18 +41,30 @@ public class UploadServiceImpl implements UploadService {
             JSONArray usersArray = (JSONArray) json.get("phoneDirectory");
 
             for (JSONObject userObject : (Iterable<JSONObject>) usersArray) {
-                User user = new User();
-                user.setFullName((String) userObject.get("fullName"));
-                int userId = userService.save(user);
-
                 JSONObject phoneInfoObject = (JSONObject) userObject.get("phoneNumbersInfo");
                 Set<String> keys = phoneInfoObject.keySet();
 
+                //Create and save User
+                User user = new User();
+                String fullName = (String) userObject.get("fullName");
+                user.setFullName(fullName);
+                int tempUserId = userService.checkIfUserExistsByFullName(fullName);
+                int userId = tempUserId != 0 ? tempUserId : userService.save(user);
+
                 for (String key : keys) {
+
+                    if(phoneNumberService.checkIfExistsByValue(key)) {
+                        log.warn("Phone number: " + key + " already exists");
+                        log.warn("Phone number: " + key + " of User: " + fullName + " was not added");
+                        continue;
+                    }
+
+                    //Create and save PhoneCompany
                     PhoneCompany phoneCompany = new PhoneCompany();
                     phoneCompany.setCompanyName((String) phoneInfoObject.get(key));
                     int companyId = phoneCompanyService.save(phoneCompany);
 
+                    //Create and save PhoneNumber
                     PhoneNumber phoneNumber = new PhoneNumber();
                     phoneNumber.setPhoneNumber(key);
                     phoneNumber.setUserId(userId);
