@@ -18,4 +18,6 @@ public interface UserService {
     int save(User user);
 
     int getNumberOfPhonesNumbersById(int id);
+
+    int checkIfUserExistsByFullName(String fullname);
 }

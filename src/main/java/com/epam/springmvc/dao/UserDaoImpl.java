@@ -78,4 +78,15 @@ public class UserDaoImpl implements UserDao {
             return 0;
         }
     }
+
+    @Override
+    public int checkIfUserExistsByFullName(String fullname) {
+        String sql = "SELECT id FROM users WHERE fullname = ?";
+        try {
+        return jdbcTemplate.queryForObject(sql, Integer.class, fullname);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No user found with fullname: " + fullname);
+            return 0;
+        }
+    }
 }

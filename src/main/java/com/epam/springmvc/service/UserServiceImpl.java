@@ -45,4 +45,9 @@ public class UserServiceImpl implements UserService {
     public int getNumberOfPhonesNumbersById(int id) {
         return userDao.getNumberOfPhonesNumbersById(id);
     }
+
+    @Override
+    public int checkIfUserExistsByFullName(String fullname) {
+        return userDao.checkIfUserExistsByFullName(fullname);
+    }
 }
