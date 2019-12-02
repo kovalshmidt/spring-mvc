@@ -1,3 +1,5 @@
 To test the upload of the app can be used internally stored sample.json in webapp/WEB-INF
 
 Some other requests can be tested using springmvc.http in com.epam.springmvc.utility
+
+sample2.json in webapp/WEB-INF can be used to test the uploading of duplicates
