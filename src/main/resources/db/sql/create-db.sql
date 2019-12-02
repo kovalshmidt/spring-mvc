@@ -32,6 +32,8 @@ create table phoneNumber
     users_id        int          null,
     constraint phoneNumber_id_uindex
         unique (id),
+    constraint phoneNumber_phoneNumber_uindex
+        unique (phoneNumber),
     constraint phoneCompany___fk
         foreign key (phoneCompany_id) references phoneCompany (id)
             on update cascade on delete cascade,
