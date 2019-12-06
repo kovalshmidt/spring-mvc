@@ -10,6 +10,8 @@ public class User {
 
     private int id;
     private String fullName;
+    private String email;
+    private String password;
 
     public User() {
     }

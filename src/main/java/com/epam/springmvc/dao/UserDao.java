@@ -21,4 +21,6 @@ public interface UserDao {
     int getNumberOfPhonesNumbersById(int id);
 
     int checkIfUserExistsByFullName(String fullname);
+
+    User findByEmail(String email);
 }

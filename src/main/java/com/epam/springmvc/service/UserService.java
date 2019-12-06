@@ -20,4 +20,6 @@ public interface UserService {
     int getNumberOfPhonesNumbersById(int id);
 
     int checkIfUserExistsByFullName(String fullname);
+
+    User findByEmail(String email);
 }

@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService {
     public int checkIfUserExistsByFullName(String fullname) {
         return userDao.checkIfUserExistsByFullName(fullname);
     }
+
+    @Override
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
 }

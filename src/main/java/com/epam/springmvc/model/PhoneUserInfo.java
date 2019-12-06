@@ -12,6 +12,7 @@ public class PhoneUserInfo {
 
     private int userId;
     private String fullName;
+    private String email;
     private Map<String, String> phoneInfo;
 
     public PhoneUserInfo() {
