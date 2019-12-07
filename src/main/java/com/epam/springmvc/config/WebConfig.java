@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.epam.springmvc")
+@ComponentScan("com.epam.springmvc.controller")
 public class WebConfig {
 
     @Bean(name = "viewResolver")
