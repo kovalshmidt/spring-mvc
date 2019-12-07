@@ -12,8 +12,8 @@ public class PhoneNumberMapper implements RowMapper<PhoneNumber> {
     public PhoneNumber mapRow(ResultSet rs, int rowNum) throws SQLException {
         PhoneNumber phoneNumber = new PhoneNumber();
         phoneNumber.setId(rs.getInt("id"));
-        phoneNumber.setPhoneNumber(rs.getString("phoneNumber"));
-        phoneNumber.setUserId(rs.getInt("users_id"));
+        phoneNumber.setPhoneNumberValue(rs.getString("phoneNumberValue"));
+        phoneNumber.setPhoneUserId(rs.getInt("phoneUser_id"));
         phoneNumber.setPhoneCompanyId(rs.getInt("phoneCompany_id"));
         return phoneNumber;
     }
