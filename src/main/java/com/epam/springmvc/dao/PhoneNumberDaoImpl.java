@@ -46,8 +46,8 @@ public class PhoneNumberDaoImpl implements PhoneNumberDao {
 
     @Override
     public void update(PhoneNumber phoneNumber) {
-        String sql = "UPDATE phoneNumber SET phoneNumber = ?, users_id = ?, phoneCompany_id = ? WHERE id = ?";
-        jdbcTemplate.update(sql, phoneNumber.getPhoneNumber(), phoneNumber.getUserId(), phoneNumber.getPhoneCompanyId(),
+        String sql = "UPDATE phoneNumber SET phoneNumberValue = ?, phoneUser_id = ?, phoneCompany_id = ? WHERE id = ?";
+        jdbcTemplate.update(sql, phoneNumber.getPhoneNumberValue(), phoneNumber.getPhoneUserId(), phoneNumber.getPhoneCompanyId(),
                 phoneNumber.getId());
     }
 
@@ -55,12 +55,12 @@ public class PhoneNumberDaoImpl implements PhoneNumberDao {
     public int save(PhoneNumber phoneNumber) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO phoneNumber (phoneNumber, users_id, phoneCompany_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO phoneNumber (phoneNumberValue, phoneUser_id, phoneCompany_id) VALUES (?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, phoneNumber.getPhoneNumber());
-            ps.setLong(2, phoneNumber.getUserId());
+            ps.setString(1, phoneNumber.getPhoneNumberValue());
+            ps.setLong(2, phoneNumber.getPhoneUserId());
             ps.setLong(3, phoneNumber.getPhoneCompanyId());
             return ps;
         }, keyHolder);
@@ -70,36 +70,36 @@ public class PhoneNumberDaoImpl implements PhoneNumberDao {
 
     @Override
     public int getUserIdByPhoneNumber(String phoneNumberValue) {
-        String sql = "SELECT users_id FROM phoneNumber WHERE phoneNumber = ?";
+        String sql = "SELECT phoneUser_id FROM phoneNumber WHERE phoneNumberValue = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumberValue);
     }
 
     @Override
     public Set<String> getPhoneNumberValuesByUserId(int userId) {
-        String sql = "SELECT phoneNumber FROM phoneNumber WHERE users_id = ?";
+        String sql = "SELECT phoneNumberValue FROM phoneNumber WHERE phoneUser_id = ?";
         return jdbcTemplate.queryForObject(sql, Set.class, userId);
     }
 
     @Override
     public List<PhoneNumber> getPhoneNumberByUserId(int userId) {
-        String sql = "SELECT * FROM phoneNumber WHERE users_id = ?";
+        String sql = "SELECT * FROM phoneNumber WHERE phoneUser_id = ?";
         return jdbcTemplate.query(sql, new PhoneNumberMapper(), userId);
     }
 
     @Override
     public PhoneNumber getPhoneNumberByValue(String phoneNumberValue) {
-        String sql = "SELECT * FROM phoneNumber WHERE phoneNumber = ?";
+        String sql = "SELECT * FROM phoneNumber WHERE phoneNumberValue = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new PhoneNumberMapper(), phoneNumberValue);
         } catch (EmptyResultDataAccessException e) {
-            log.warn("No rows found with such phone number: " + phoneNumberValue);
+            log.warn("No rows found with such phone number value: " + phoneNumberValue);
             return null;
         }
     }
 
     @Override
     public int checkIfExistsByValue(String phoneNumberValue) {
-        String sql = "SELECT COUNT(1) FROM phoneNumber WHERE phoneNumber = ?";
+        String sql = "SELECT COUNT(1) FROM phoneNumber WHERE phoneNumberValue = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumberValue);
     }
 }
