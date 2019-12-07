@@ -1,7 +1,7 @@
 package com.epam.springmvc.config;
 
 import com.epam.springmvc.security.CustomAuthenticationSuccessHandler;
-import com.epam.springmvc.service.UserDetailsServiceImpl;
+import com.epam.springmvc.security.UserDetailsServiceImpl;
 import com.epam.springmvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
