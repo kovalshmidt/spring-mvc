@@ -2,7 +2,7 @@ package com.epam.springmvc.service;
 
 import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneNumber;
-import com.epam.springmvc.model.User;
+import com.epam.springmvc.model.PhoneUser;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,20 +14,19 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
 @Service
 public class UploadServiceImpl implements UploadService {
 
-    private UserService userService;
+    private PhoneUserService phoneUserService;
     private PhoneNumberService phoneNumberService;
     private PhoneCompanyService phoneCompanyService;
 
     @Autowired
-    public UploadServiceImpl(UserService userService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
-        this.userService = userService;
+    public UploadServiceImpl(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
+        this.phoneUserService = phoneUserService;
         this.phoneNumberService = phoneNumberService;
         this.phoneCompanyService = phoneCompanyService;
     }
@@ -45,11 +44,11 @@ public class UploadServiceImpl implements UploadService {
                 Set<String> keys = phoneInfoObject.keySet();
 
                 //Create and save User
-                User user = new User();
+                PhoneUser phoneUser = new PhoneUser();
                 String fullName = (String) userObject.get("fullName");
-                user.setFullName(fullName);
-                int tempUserId = userService.checkIfUserExistsByFullName(fullName);
-                int userId = tempUserId != 0 ? tempUserId : userService.save(user);
+                phoneUser.setFullName(fullName);
+                int tempUserId = phoneUserService.checkIfUserExistsByFullName(fullName);
+                int userId = tempUserId != 0 ? tempUserId : phoneUserService.save(phoneUser);
 
                 for (String key : keys) {
 
@@ -66,8 +65,8 @@ public class UploadServiceImpl implements UploadService {
 
                     //Create and save PhoneNumber
                     PhoneNumber phoneNumber = new PhoneNumber();
-                    phoneNumber.setPhoneNumber(key);
-                    phoneNumber.setUserId(userId);
+                    phoneNumber.setPhoneNumberValue(key);
+                    phoneNumber.setPhoneUserId(userId);
                     phoneNumber.setPhoneCompanyId(companyId);
                     phoneNumberService.save(phoneNumber);
                 }

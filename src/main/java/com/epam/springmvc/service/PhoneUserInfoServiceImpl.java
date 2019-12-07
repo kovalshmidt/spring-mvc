@@ -2,8 +2,8 @@ package com.epam.springmvc.service;
 
 import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneNumber;
+import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.PhoneUserInfo;
-import com.epam.springmvc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,13 @@ import java.util.Optional;
 @Service
 public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
 
-    private UserService userService;
+    private PhoneUserService phoneUserService;
     private PhoneNumberService phoneNumberService;
     private PhoneCompanyService phoneCompanyService;
 
     @Autowired
-    public PhoneUserInfoServiceImpl(UserService userService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
-        this.userService = userService;
+    public PhoneUserInfoServiceImpl(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
+        this.phoneUserService = phoneUserService;
         this.phoneNumberService = phoneNumberService;
         this.phoneCompanyService = phoneCompanyService;
     }
@@ -29,8 +29,8 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
     @Override
     public void save(PhoneUserInfo phoneUserInfo) {
 
-        User user = new User(phoneUserInfo.getFullName());
-        int userId = userService.save(user);
+        PhoneUser phoneUser = new PhoneUser(phoneUserInfo.getFullName());
+        int userId = phoneUserService.save(phoneUser);
 
         for (Map.Entry<String, String> entry : phoneUserInfo.getPhoneInfo().entrySet()) {
 
@@ -53,16 +53,16 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
         } else {
 
             for (PhoneNumber phoneNumber : phoneNumbers) {
-                String phoneNumberValue = phoneNumber.getPhoneNumber();
+                String phoneNumberValue = phoneNumber.getPhoneNumberValue();
                 String companyName = phoneCompanyService.getById(phoneNumber.getPhoneCompanyId()).getCompanyName();
                 phoneInfo.put(phoneNumberValue, companyName);
             }
             phoneUserInfo.setPhoneInfo(phoneInfo);
         }
 
-        User user = Optional.ofNullable(userService.getById(id)).orElse(new User(""));
-        phoneUserInfo.setUserId(user.getId());
-        phoneUserInfo.setFullName(user.getFullName());
+        PhoneUser phoneUser = Optional.ofNullable(phoneUserService.getById(id)).orElse(new PhoneUser(""));
+        phoneUserInfo.setUserId(phoneUser.getId());
+        phoneUserInfo.setFullName(phoneUser.getFullName());
 
         return phoneUserInfo;
     }
