@@ -31,6 +31,6 @@
 
 </table>
 <br>
-<a href="/users">back</a>
+<a href="/phoneUsers">back</a>
 </body>
 </html>

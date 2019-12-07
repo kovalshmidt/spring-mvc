@@ -41,5 +41,6 @@
 </p>
 
 <a href="/uploadPage">To upload page</a>
+<a href="/logout">Logout</a>
 </body>
 </html>

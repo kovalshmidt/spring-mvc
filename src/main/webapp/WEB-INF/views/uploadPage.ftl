@@ -4,7 +4,7 @@
 </head>
 <body>
 <br>
-<a href="/users">To Phone Directory</a>
+<a href="/phoneUsers">To Phone Directory</a>
 
 <form method="POST" enctype="multipart/form-data" action="/uploadFile">
     File to upload:<br>
