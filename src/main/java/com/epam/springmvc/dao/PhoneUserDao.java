@@ -1,26 +1,24 @@
 package com.epam.springmvc.dao;
 
-import com.epam.springmvc.model.User;
+import com.epam.springmvc.model.PhoneUser;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface UserDao {
+public interface PhoneUserDao {
 
-    List<User> findAll();
+    List<PhoneUser> findAll();
 
-    User getById(int id);
+    PhoneUser getById(int id);
 
     void deleteById(int id);
 
-    void update(User user);
+    void update(PhoneUser phoneUser);
 
-    int save(User user);
+    int save(PhoneUser phoneUser);
 
     int getNumberOfPhonesNumbersById(int id);
 
     int checkIfUserExistsByFullName(String fullname);
-
-    User findByEmail(String email);
 }
