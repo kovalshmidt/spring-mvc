@@ -1,6 +1,5 @@
 package com.epam.springmvc.service;
 
-import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.User;
 
 import java.util.List;
@@ -18,4 +17,6 @@ public interface UserService {
     int save(User user);
 
     User findByEmail(String email);
+
+    User findByPhoneUserId(int id);
 }

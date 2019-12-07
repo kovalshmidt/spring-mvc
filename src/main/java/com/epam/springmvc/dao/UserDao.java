@@ -21,4 +21,6 @@ public interface UserDao {
 
     User findByEmail(String email);
 
+    User findByPhoneUserId(int id);
+
 }

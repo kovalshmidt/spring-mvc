@@ -54,7 +54,7 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public List<PhoneNumber> getPhoneNumbersByUserId(int userId) {
+    public List<PhoneNumber> getPhoneNumbersByPhoneUserId(int userId) {
         return phoneNumberDao.getPhoneNumberByUserId(userId);
     }
 

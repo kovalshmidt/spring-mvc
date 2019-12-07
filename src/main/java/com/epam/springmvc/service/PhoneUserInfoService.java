@@ -6,5 +6,5 @@ public interface PhoneUserInfoService {
 
     void save(PhoneUserInfo phoneUserInfo);
 
-    PhoneUserInfo createByUserId(int id);
+    PhoneUserInfo createByPhoneUserId(int id);
 }

@@ -83,4 +83,16 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
     }
+
+    @Override
+    public User findByPhoneUserId(int id) {
+        String sql = "SELECT * FROM users WHERE phoneUser_id = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
+        } catch (
+                EmptyResultDataAccessException e) {
+            System.out.println("No rows found with such user phone id: " + id);
+            return null;
+        }
+    }
 }

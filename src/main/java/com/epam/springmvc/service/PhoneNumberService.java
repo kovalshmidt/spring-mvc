@@ -21,7 +21,7 @@ public interface PhoneNumberService {
 
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
-    List<PhoneNumber> getPhoneNumbersByUserId(int userId);
+    List<PhoneNumber> getPhoneNumbersByPhoneUserId(int userId);
 
     PhoneNumber getPhoneNumberByValue(String phoneNumber);
 

@@ -88,7 +88,7 @@ public class PdfUtility {
             cell.setRowspan(countOfNumbers);
             table.addCell(cell);
 
-            List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByUserId(userId);
+            List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByPhoneUserId(userId);
 
             for(PhoneNumber phoneNumber : phoneNumbers) {
                 String companyName = phoneCompanyService.getById(phoneNumber.getPhoneCompanyId()).getCompanyName();

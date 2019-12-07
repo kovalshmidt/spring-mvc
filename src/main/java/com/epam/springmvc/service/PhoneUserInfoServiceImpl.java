@@ -1,9 +1,6 @@
 package com.epam.springmvc.service;
 
-import com.epam.springmvc.model.PhoneCompany;
-import com.epam.springmvc.model.PhoneNumber;
-import com.epam.springmvc.model.PhoneUser;
-import com.epam.springmvc.model.PhoneUserInfo;
+import com.epam.springmvc.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +15,15 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
     private PhoneUserService phoneUserService;
     private PhoneNumberService phoneNumberService;
     private PhoneCompanyService phoneCompanyService;
+    private UserService userService;
 
     @Autowired
-    public PhoneUserInfoServiceImpl(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
+    public PhoneUserInfoServiceImpl(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService,
+                                    PhoneCompanyService phoneCompanyService, UserService userService) {
         this.phoneUserService = phoneUserService;
         this.phoneNumberService = phoneNumberService;
         this.phoneCompanyService = phoneCompanyService;
+        this.userService = userService;
     }
 
     @Override
@@ -43,10 +43,10 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
     }
 
     @Override
-    public PhoneUserInfo createByUserId(int id) {
+    public PhoneUserInfo createByPhoneUserId(int id) {
         PhoneUserInfo phoneUserInfo = new PhoneUserInfo();
 
-        List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByUserId(id);
+        List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByPhoneUserId(id);
         Map<String, String> phoneInfo = new HashMap<>();
         if (phoneNumbers.isEmpty()) {
             phoneUserInfo.setPhoneInfo(phoneInfo);
@@ -60,9 +60,15 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
             phoneUserInfo.setPhoneInfo(phoneInfo);
         }
 
+        //Find PhoneUser and set to PhoneUserInfo data from him
         PhoneUser phoneUser = Optional.ofNullable(phoneUserService.getById(id)).orElse(new PhoneUser(""));
-        phoneUserInfo.setUserId(phoneUser.getId());
+        phoneUserInfo.setPhoneUserId(phoneUser.getId());
         phoneUserInfo.setFullName(phoneUser.getFullName());
+
+        //Find User and set to PhoneUserInfo data from him
+        User user = userService.findByPhoneUserId(phoneUser.getId());
+        phoneUserInfo.setEmail(user.getEmail());
+        phoneUserInfo.setRoles(user.getRoles());
 
         return phoneUserInfo;
     }

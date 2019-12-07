@@ -10,9 +10,10 @@ import java.util.Map;
 @Setter
 public class PhoneUserInfo {
 
-    private int userId;
+    private int phoneUserId;
     private String fullName;
     private String email;
+    private String roles;
     private Map<String, String> phoneInfo;
 
     public PhoneUserInfo() {
