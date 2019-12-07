@@ -1,11 +1,13 @@
-package com.epam.springmvc.service;
+package com.epam.springmvc.dao;
 
 import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserService {
+@Repository
+public interface UserDao {
 
     List<User> findAll();
 
@@ -18,4 +20,5 @@ public interface UserService {
     int save(User user);
 
     User findByEmail(String email);
+
 }
