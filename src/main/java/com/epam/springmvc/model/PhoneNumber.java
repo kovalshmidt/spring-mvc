@@ -8,16 +8,16 @@ import lombok.Setter;
 public class PhoneNumber {
 
     private long id;
-    private String phoneNumber;
-    private int userId;
+    private String phoneNumberValue;
+    private int phoneUserId;
     private int phoneCompanyId;
 
     public PhoneNumber() {
     }
 
-    public PhoneNumber(String phoneNumber, int userId, int phoneCompanyId) {
-        this.phoneNumber = phoneNumber;
-        this.userId = userId;
+    public PhoneNumber(String phoneNumberValue, int phoneUserId, int phoneCompanyId) {
+        this.phoneNumberValue = phoneNumberValue;
+        this.phoneUserId = phoneUserId;
         this.phoneCompanyId = phoneCompanyId;
     }
 }

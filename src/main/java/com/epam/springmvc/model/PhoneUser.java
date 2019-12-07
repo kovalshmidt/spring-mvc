@@ -1,22 +1,20 @@
 package com.epam.springmvc.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class User {
+public class PhoneUser {
 
     private int id;
     private String fullName;
-    private String email;
-    private String password;
 
-    public User() {
+    public PhoneUser() {
     }
 
-    public User(String fullName) {
+    public PhoneUser(String fullName) {
+        this();
         this.fullName = fullName;
     }
 
