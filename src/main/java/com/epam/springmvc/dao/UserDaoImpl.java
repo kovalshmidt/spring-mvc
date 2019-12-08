@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao {
     public int save(User user) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO user (email, password, roles) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (email, password, roles) VALUES (?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

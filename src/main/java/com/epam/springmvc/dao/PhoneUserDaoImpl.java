@@ -57,7 +57,7 @@ public class PhoneUserDaoImpl implements PhoneUserDao {
     public int save(PhoneUser phoneUser) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO phoneUser (fullName) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO phoneUser (fullName) VALUES (?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
