@@ -46,12 +46,13 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
     public PhoneUserInfo createByPhoneUserId(int id) {
         PhoneUserInfo phoneUserInfo = new PhoneUserInfo();
 
+        //Retrieve the PhoneNumbers
         List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByPhoneUserId(id);
         Map<String, String> phoneInfo = new HashMap<>();
         if (phoneNumbers.isEmpty()) {
             phoneUserInfo.setPhoneInfo(phoneInfo);
         } else {
-
+            //Populate the phoneInfo map with 'key:phoneNumberValue' and 'value:companyName'
             for (PhoneNumber phoneNumber : phoneNumbers) {
                 String phoneNumberValue = phoneNumber.getPhoneNumberValue();
                 String companyName = phoneCompanyService.getById(phoneNumber.getPhoneCompanyId()).getCompanyName();
@@ -60,13 +61,26 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
             phoneUserInfo.setPhoneInfo(phoneInfo);
         }
 
-        //Find PhoneUser and set to PhoneUserInfo data from him
+        //Find PhoneUser and set to PhoneUserInfo 'phoneUserId' and 'fullName'
         PhoneUser phoneUser = Optional.ofNullable(phoneUserService.getById(id)).orElse(new PhoneUser(""));
         phoneUserInfo.setPhoneUserId(phoneUser.getId());
         phoneUserInfo.setFullName(phoneUser.getFullName());
 
+        return phoneUserInfo;
+    }
+
+    @Override
+    public PhoneUserInfo createByUserId(int id) {
+
         //Find User and set to PhoneUserInfo data from him
-        User user = userService.findByPhoneUserId(phoneUser.getId());
+        User user = userService.getById(id);
+        if(user == null) {
+            return new PhoneUserInfo();
+        }
+
+        //Get PhoneUserInfo and set data 'email' and 'roles' from User
+        int phoneUserId = user.getPhoneUserId();
+        PhoneUserInfo phoneUserInfo = createByPhoneUserId(phoneUserId);
         phoneUserInfo.setEmail(user.getEmail());
         phoneUserInfo.setRoles(user.getRoles());
 
