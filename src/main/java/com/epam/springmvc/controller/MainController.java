@@ -5,6 +5,7 @@ import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.PhoneUserInfo;
 import com.epam.springmvc.service.PhoneUserInfoService;
 import com.epam.springmvc.service.PhoneUserService;
+import com.epam.springmvc.service.UserService;
 import com.epam.springmvc.utility.PdfUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +33,15 @@ public class MainController {
     private PhoneUserService phoneUserService;
     private PdfUtility pdfUtility;
     private PhoneUserInfoService phoneUserInfoService;
+    private UserService userService;
 
     @Autowired
-    public MainController(PhoneUserService phoneUserService, PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService) {
+    public MainController(PhoneUserService phoneUserService, PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService,
+                          UserService userService) {
         this.phoneUserService = phoneUserService;
         this.pdfUtility = pdfUtility;
         this.phoneUserInfoService = phoneUserInfoService;
+        this.userService = userService;
     }
 
     /**
@@ -44,7 +49,7 @@ public class MainController {
      */
     @GetMapping(value = {"/", "/index"})
     public String index(Model model) {
-        return "homePage";
+        return "redirect:homePage";
     }
 
     /**
@@ -56,7 +61,7 @@ public class MainController {
         List<PhoneUserInfo> phoneUserInfos = new ArrayList<>();
         List<Integer> usersIds = phoneUserService.findAll().stream().map(PhoneUser::getId).collect(Collectors.toList());
         for (Integer id : usersIds) {
-            phoneUserInfos.add(phoneUserInfoService.createByUserId(id));
+            phoneUserInfos.add(phoneUserInfoService.createByPhoneUserId(id));
         }
 
         model.addAttribute("phoneUserInfos", phoneUserInfos);
@@ -69,7 +74,9 @@ public class MainController {
     @GetMapping(value = "/user/{id}")
     public String getById(@PathVariable("id") int id, Model model) {
 
-        model.addAttribute("phoneUserInfo", phoneUserInfoService.createByUserId(id));
+        PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByPhoneUserId(id);
+        model.addAttribute("phoneUserInfo", phoneUserInfo);
+        model.addAttribute("hasPhones", phoneUserInfo.getPhoneUserId() != 0);
         return "showPhoneUser";
     }
 
@@ -98,6 +105,21 @@ public class MainController {
     @GetMapping(value = "/uploadPage")
     public String toUploadPage() {
         return "uploadPage";
+    }
+
+
+    @GetMapping(value = "/homePage")
+    public String homePage(Principal principal, Model model) {
+
+        PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByUserId(
+                userService.findByEmail(principal.getName()).getId());
+
+        boolean isAdmin = phoneUserInfo.getRoles().contains("BOOKING_MANAGER");
+
+        model.addAttribute("phoneUserInfo", phoneUserInfo);
+        model.addAttribute("admin", isAdmin);
+
+        return "homePage";
     }
 
 }
