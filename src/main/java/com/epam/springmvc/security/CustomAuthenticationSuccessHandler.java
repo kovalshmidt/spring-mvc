@@ -47,28 +47,19 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     }
 
     private String determineTargetUrl(Authentication authentication) {
-        boolean isRegisteredUser = false;
-        boolean isBookingManager = false;
         List<String> authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
 
         if (authorities.contains("BOOKING_MANAGER")) {
-            isBookingManager = true;
+            //here we can set a page to redirect for BOOKING_MANAGER
         }
 
         if (authorities.contains("REGISTERED_USER")) {
-            isRegisteredUser = true;
+            //here we can set a page to redirect for REGISTERED_USER
         }
 
-        if (isRegisteredUser) {
-            int phoneUserId = userService.findByEmail(authentication.getName()).getPhoneUserId();
-            return "/user/" + phoneUserId;
-        } else if (isBookingManager) {
-            return "/users";
-        } else {
-            throw new IllegalStateException();
-        }
+        return "/homePage";
     }
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
