@@ -32,10 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/homePage").hasAnyAuthority("BOOKING_MANAGER", "REGISTERED_USER")
                 .antMatchers("/users", "/uploadPage").hasAuthority("BOOKING_MANAGER")
                 .and().csrf().disable()
-                .formLogin()
+                .formLogin().defaultSuccessUrl("/homePage", true)
                 .loginPage("/login")
                 .loginProcessingUrl("/login/process")
-                .successHandler(getAuthenticationSuccessHandler())
+//                .successHandler(getAuthenticationSuccessHandler()) for the case when we want to manage where to redirect based on the role
                 .usernameParameter("email")
                 .failureUrl("/login?error=true")
                 .and()
