@@ -18,7 +18,7 @@
     <#list phoneUserInfos as userInfo>
         <#list userInfo.phoneInfo as key, value>
             <tr>
-            <#if count = 0 >
+            <#if count == 0 >
                 <td>${userInfo.fullName}</td>
                 <#assign count = count + 1>
             <#else>
@@ -28,7 +28,7 @@
             <td>${value}</td>
         </#list>
         <td>
-            <button><a href="/user/${userInfo.userId}">Get info</a></button>
+            <button><a href="/user/${userInfo.phoneUserId}">Get info</a></button>
         </td>
         <#assign count = 0>
         </tr>
@@ -39,8 +39,17 @@
     If you want to download the pdf file of the Phone Directory press:
     <button><a href="/getUsersPdf"> Download</a></button>
 </p>
+<div>
+    <button>
+        <a href="/uploadPage">To upload page</a>
+    </button>
+</div>
+<div>
+    <button>
+        <a href="/logout">Logout</a>
+    </button>
+</div>
 
-<a href="/uploadPage">To upload page</a>
-<a href="/logout">Logout</a>
+
 </body>
 </html>
