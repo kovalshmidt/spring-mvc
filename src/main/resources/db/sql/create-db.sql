@@ -1,47 +1,48 @@
-CREATE SCHEMA IF NOT EXISTS phones;
-
 create table phoneCompany
 (
-    id          int auto_increment,
-    companyName varchar(255) null,
-    constraint phoneCompany_companyName_uindex
-        unique (companyName),
-    constraint phoneCompany_id_uindex
-        unique (id)
+    id          int auto_increment
+        primary key,
+    companyName varchar(255) null
 );
 
-alter table phoneCompany
-    add primary key (id);
-
-create table users
+create table phoneUser
 (
-    id       int auto_increment,
-    fullName varchar(30) null,
-    constraint users_id_uindex
-        unique (id)
+    id       int auto_increment
+        primary key,
+    fullName varchar(30) null
 );
-
-alter table users
-    add primary key (id);
 
 create table phoneNumber
 (
-    id              int auto_increment,
-    phoneNumber     varchar(255) null,
-    phoneCompany_id int          null,
-    users_id        int          null,
-    constraint phoneNumber_id_uindex
-        unique (id),
-    constraint phoneNumber_phoneNumber_uindex
-        unique (phoneNumber),
+    id               int auto_increment
+        primary key,
+    phoneNumberValue varchar(255) null,
+    phoneCompany_id  int          null,
+    phoneUser_id     int          null,
     constraint phoneCompany___fk
         foreign key (phoneCompany_id) references phoneCompany (id)
             on update cascade on delete cascade,
-    constraint user___fk
-        foreign key (users_id) references users (id)
+    constraint phoneUser___fk
+        foreign key (phoneUser_id) references phoneUser (id)
             on update cascade on delete cascade
 );
 
-alter table phoneNumber
+create table users
+(
+    id           int auto_increment,
+    email        varchar(30)  not null,
+    password     text         not null,
+    roles        varchar(100) not null,
+    phoneUser_id int          null,
+    constraint users_email_uindex
+        unique (email),
+    constraint users_id_uindex
+        unique (id),
+    constraint phoneUser_id_fk
+        foreign key (phoneUser_id) references phoneUser (id)
+            on update cascade on delete cascade
+);
+
+alter table users
     add primary key (id);
 
