@@ -36,7 +36,7 @@ public class AuthController {
         newUser.setEmail(user.getEmail());
         newUser.setPassword(user.getPassword());
         userService.save(newUser);
-        return "redirect:/users";
+        return "redirect:/homePage";
     }
 
     /**
@@ -48,6 +48,14 @@ public class AuthController {
             model.addAttribute("error", true);
         }
         return "auth/login";
+    }
+
+    /**
+     * The url that opens a page when the access is denies
+     */
+    @GetMapping("/accessDenied")
+    public String accessDenied() {
+        return "/exceptions/accessDenied";
     }
 
 
