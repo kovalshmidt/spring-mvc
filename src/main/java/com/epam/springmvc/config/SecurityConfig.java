@@ -29,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/sign_up", "/login").anonymous()
-                .antMatchers("/user").authenticated()
-                .antMatchers("/users", "/uploadPage").hasRole("BOOKING_MANAGER")
+                .antMatchers("/homePage").hasAnyAuthority("BOOKING_MANAGER", "REGISTERED_USER")
+                .antMatchers("/users", "/uploadPage").hasAuthority("BOOKING_MANAGER")
                 .and().csrf().disable()
                 .formLogin()
                 .loginPage("/login")
@@ -40,8 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/users")
-                .and().logout();
+                .accessDeniedPage("/accessDenied")
+                .and()
+                .logout().deleteCookies("JSESSIONID")
+                .and()
+                .rememberMe().key("uniqueAndSecret").userDetailsService(getUserDetailService());;
     }
 
     @Override
