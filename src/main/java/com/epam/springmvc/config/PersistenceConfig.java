@@ -16,7 +16,8 @@ public class PersistenceConfig {
 
     @Bean
     public JdbcTemplate getJdbcTemplate() {
-        return new JdbcTemplate(getDataSourceMysql());
+        //Choose the Datasource between MySQL and H2
+        return new JdbcTemplate(getDataSourceH2());
     }
 
     /**
