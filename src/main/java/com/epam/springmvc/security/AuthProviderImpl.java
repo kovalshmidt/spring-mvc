@@ -2,7 +2,6 @@ package com.epam.springmvc.security;
 
 import com.epam.springmvc.model.User;
 import com.epam.springmvc.service.UserService;
-import com.epam.springmvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

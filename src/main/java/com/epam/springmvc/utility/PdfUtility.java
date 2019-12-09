@@ -81,7 +81,7 @@ public class PdfUtility {
         table.addCell(cell);
 
         List<PhoneUser> phoneUsers = phoneUserService.findAll();
-        for(PhoneUser phoneUser : phoneUsers) {
+        for (PhoneUser phoneUser : phoneUsers) {
             int userId = phoneUser.getId();
             int countOfNumbers = phoneUserService.getNumberOfPhonesNumbersById(userId);
             cell = new PdfPCell(new Phrase(phoneUser.getFullName()));
@@ -90,7 +90,7 @@ public class PdfUtility {
 
             List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByPhoneUserId(userId);
 
-            for(PhoneNumber phoneNumber : phoneNumbers) {
+            for (PhoneNumber phoneNumber : phoneNumbers) {
                 String companyName = phoneCompanyService.getById(phoneNumber.getPhoneCompanyId()).getCompanyName();
 
                 table.addCell(phoneNumber.getPhoneNumberValue());

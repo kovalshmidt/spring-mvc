@@ -1,8 +1,6 @@
 package com.epam.springmvc.dao;
 
-import com.epam.springmvc.mapper.PhoneUserMapper;
 import com.epam.springmvc.mapper.UserMapper;
-import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

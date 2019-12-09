@@ -83,7 +83,7 @@ public class PhoneUserDaoImpl implements PhoneUserDao {
     public int checkIfUserExistsByFullName(String fullname) {
         String sql = "SELECT id FROM phoneUser WHERE fullname = ?";
         try {
-        return jdbcTemplate.queryForObject(sql, Integer.class, fullname);
+            return jdbcTemplate.queryForObject(sql, Integer.class, fullname);
         } catch (EmptyResultDataAccessException e) {
             System.out.println("No user found with fullname: " + fullname);
             return 0;

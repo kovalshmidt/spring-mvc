@@ -1,7 +1,6 @@
 package com.epam.springmvc.service;
 
 import com.epam.springmvc.dao.UserDao;
-import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

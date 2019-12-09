@@ -74,7 +74,7 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
 
         //Find User and set to PhoneUserInfo data from him
         User user = userService.getById(id);
-        if(user == null) {
+        if (user == null) {
             return new PhoneUserInfo();
         }
 

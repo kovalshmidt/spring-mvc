@@ -3,7 +3,6 @@ package com.epam.springmvc.service;
 import com.epam.springmvc.dao.PhoneUserDao;
 import com.epam.springmvc.model.PhoneUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

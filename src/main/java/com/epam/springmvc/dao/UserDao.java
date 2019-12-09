@@ -1,6 +1,5 @@
 package com.epam.springmvc.dao;
 
-import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.User;
 import org.springframework.stereotype.Repository;
 

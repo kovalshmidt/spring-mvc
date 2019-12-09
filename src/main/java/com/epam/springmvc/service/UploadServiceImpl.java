@@ -52,7 +52,7 @@ public class UploadServiceImpl implements UploadService {
 
                 for (String key : keys) {
 
-                    if(phoneNumberService.checkIfExistsByValue(key)) {
+                    if (phoneNumberService.checkIfExistsByValue(key)) {
                         log.warn("Phone number: " + key + " already exists");
                         log.warn("Phone number: " + key + " of User: " + fullName + " was not added");
                         continue;
