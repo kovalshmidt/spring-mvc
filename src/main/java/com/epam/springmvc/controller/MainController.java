@@ -35,6 +35,10 @@ public class MainController {
     private PhoneUserInfoService phoneUserInfoService;
     private UserService userService;
 
+
+    private static int loggedUserId;
+    private static boolean isAdmin;
+
     @Autowired
     public MainController(PhoneUserService phoneUserService, PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService,
                           UserService userService) {
@@ -65,6 +69,9 @@ public class MainController {
         }
 
         model.addAttribute("phoneUserInfos", phoneUserInfos);
+
+        model.addAttribute("admin", isAdmin);
+        model.addAttribute("loggedUserId", loggedUserId);
         return "usersList";
     }
 
@@ -77,6 +84,9 @@ public class MainController {
         PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByPhoneUserId(id);
         model.addAttribute("phoneUserInfo", phoneUserInfo);
         model.addAttribute("hasPhones", phoneUserInfo.getPhoneUserId() != 0);
+
+        model.addAttribute("admin", isAdmin);
+        model.addAttribute("loggedUserId", loggedUserId);
         return "showPhoneUser";
     }
 
@@ -103,7 +113,10 @@ public class MainController {
      * The page on which is possible to upload a file with phone users, accessible[BOOKING_MANAGER]
      */
     @GetMapping(value = "/uploadPage")
-    public String toUploadPage() {
+    public String toUploadPage(Model model) {
+
+        model.addAttribute("admin", isAdmin);
+        model.addAttribute("loggedUserId", loggedUserId);
         return "uploadPage";
     }
 
@@ -111,13 +124,15 @@ public class MainController {
     @GetMapping(value = "/homePage")
     public String homePage(Principal principal, Model model) {
 
-        PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByUserId(
-                userService.findByEmail(principal.getName()).getId());
+        loggedUserId = userService.findByEmail(principal.getName()).getId();
+        PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByUserId(loggedUserId);
 
-        boolean isAdmin = phoneUserInfo.getRoles().contains("BOOKING_MANAGER");
+        isAdmin = phoneUserInfo.getRoles().contains("BOOKING_MANAGER");
 
         model.addAttribute("phoneUserInfo", phoneUserInfo);
+
         model.addAttribute("admin", isAdmin);
+        model.addAttribute("loggedUserId", loggedUserId);
 
         return "homePage";
     }
