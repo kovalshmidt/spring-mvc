@@ -1,0 +1,9 @@
+.centered-form {
+    width: 340px;
+    margin: 50px auto;
+}
+
+.margins-top-bottom {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
