@@ -18,30 +18,35 @@
 
 <div class="container">
     <!-- Nav -->
-    <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" href="/homePage">Home</a>
-                    <#if admin == true>
-                        <a class="nav-link active" href="/users">Phone Directory</a>
-                        <a class="nav-link" role="button" href="/uploadPage">Upload File</a>
-                    </#if>
-                    <a class="nav-link" role="button" href="/user/${loggedUserId}">User phone Info</a>
-                    <a class="nav-link justify-content-end" role="button" href="/logout">Logout</a>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/homePage">
+            <img src="/resources/img/phone_book.png" width="30" height="30" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/homePage">Home</a>
+                <#if admin == true>
+                    <a class="nav-link active" href="/users">Phone Directory</a>
+                    <a class="nav-link" role="button" href="/uploadPage">Upload File</a>
+                </#if>
+                <a class="nav-link" role="button" href="/user/${loggedUserId}">User phone Info</a>
             </div>
-        </nav>
-    </div>
+            <div class="navbar-right">
+                <a class="" role="button" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- Additional buttons -->
-    <div class="row margins-top-bottom">
-        <div class="col-md-4">
-            <a class="btn btn-success btn-sm" role="button" href="/getUsersPdf">Download PDF</a>
+    <div class="row margins-top-bottom justify-content-end">
+        <div class="col-md-2">
+            <div class="float-md-right">
+                <a class="btn btn-info btn-sm" role="button" href="/getUsersPdf">Download PDF</a>
+            </div>
         </div>
     </div>
 
