@@ -1,53 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Home page</title>
+
+    <#--    Styles-->
+    <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+    <#--     Scripts-->
+    <script src="/resources/js/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="/resources/js/bootstrap.js" type="text/javascript"></script>
 </head>
 <body>
-<h1> Welcome ${phoneUserInfo.fullName}
-<#if admin == true>
-    to Administration page</h1>
-<#else>
-    to the User Home Page</h1>
-</#if>
 
-<#if admin == true>
-    <div>
-        <p>
-            To open a table with Phone Users with ability to download a pdf file with all the Phone Users data.
-            Click ->
-            <button>
-                <a href="/users">Show phone Users</a>
-            </button>
-        </p>
-
-    </div>
-
-    <div>
-        <p>
-            To upload a file with Phone Users into the system.
-            Click ->
-            <button>
-                <a href="/uploadPage">Upload phone users</a>
-            </button>
-        </p>
-    </div>
-
-</#if>
-<div>
-    <p>
-        <button>
-            <a href="/user/${phoneUserInfo.phoneUserId}">User phone Info</a>
+<div class="container">
+    <!-- Nav -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        Phone info about the logged user
-    </p>
-</div>
+        <div class="collapse navbar-collapse justify-content-between"" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" href="/homePage">Home</a>
+                <#if admin == true>
+                    <a class="nav-link" href="/users">Phone Directory</a>
+                    <a class="nav-link" role="button" href="/uploadPage">Upload File</a>
+                </#if>
+                <a class="nav-link" role="button" href="/user/${phoneUserInfo.phoneUserId}">User phone Info</a>
+            </div>
+            <div class="navbar-right">
+                <a class="" role="button" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
 
-<div>
-    <button>
-        <a href="/logout">Logout</a>
-    </button>
+    <!-- Welcome -->
+    <div class="row margins-top-bottom justify-content-center">
+        <h1 class="text-center"> Welcome ${phoneUserInfo.fullName}
+            <#if admin == true>
+            to Administration page</h1>
+        <#else>
+            to the User Home Page</h1>
+        </#if>
+    </div>
 </div>
-
 </body>
 </html>
