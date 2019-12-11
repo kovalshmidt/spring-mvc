@@ -31,6 +31,8 @@ create table phoneUserAccount
 create table users
 (
     id           int auto_increment,
+    name         varchar(30)  null,
+    surname      varchar(30)  null,
     email        varchar(30)  not null,
     password     text         not null,
     roles        varchar(100) not null,

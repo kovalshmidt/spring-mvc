@@ -49,21 +49,23 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE user SET email = ? password = ? roles = ? WHERE id = ?";
-        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getRoles(), user.getId());
+        String sql = "UPDATE user SET name = ? surname = ? email = ? password = ? roles = ? WHERE id = ?";
+        jdbcTemplate.update(sql, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getRoles(), user.getId());
     }
 
     @Override
     public int save(User user) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO users (email, password, roles) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users (name, surname, email, password, roles) VALUES (?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getRoles());
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getSurname());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getRoles());
             return ps;
         }, keyHolder);
 

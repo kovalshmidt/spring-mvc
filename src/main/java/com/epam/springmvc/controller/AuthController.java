@@ -33,8 +33,11 @@ public class AuthController {
     @RequestMapping(value = "/sign_up", method = RequestMethod.POST)
     public String signUp(@ModelAttribute User user) {
         User newUser = new User();
+        newUser.setName(user.getName());
+        newUser.setSurname(user.getSurname());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(user.getPassword());
+
         userService.save(newUser);
         return "redirect:/homePage";
     }

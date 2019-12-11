@@ -16,7 +16,10 @@
         <form name="phoneUser" action="sign_up" method="post">
             <h2 class="text-center">Sign Up</h2>
             <div class="form-group">
-                <input name="fullName" type="text" class="form-control" placeholder="Full Name" required="required">
+                <input name="name" type="text" class="form-control" placeholder="Name" required="required">
+            </div>
+            <div class="form-group">
+                <input name="surname" type="text" class="form-control" placeholder="Surname" required="required">
             </div>
             <div class="form-group">
                 <input name="email" type="email" class="form-control" placeholder="Email" required="required">
