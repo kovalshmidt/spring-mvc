@@ -12,7 +12,7 @@ create table users
     name     varchar(30)  null,
     surname  varchar(30)  null,
     email    varchar(30)  not null,
-    password text         not null,
+    password text         null,
     roles    varchar(100) not null,
     constraint users_email_uindex
         unique (email)

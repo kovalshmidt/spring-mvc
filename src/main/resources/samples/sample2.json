@@ -32,6 +32,7 @@
     {
       "name": "Stepan ",
       "surname" : "Petrenko",
+      "email" : "petr@petr.com",
       "phoneNumbersInfo": {
         "380970752343": "kyivstar",
         "380736973589": "lifecell"

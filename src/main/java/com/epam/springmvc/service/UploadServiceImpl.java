@@ -48,8 +48,12 @@ public class UploadServiceImpl implements UploadService {
                 User user = new User();
                 String name = (String) userObject.get("name");
                 String surname = (String) userObject.get("surname");
+                String email = (String) userObject.get("email");
+
                 user.setName(name);
                 user.setSurname(surname);
+                user.setEmail(email);
+
                 int tempUserId = userService.checkIfUserExistsByNameAndSurname(name, surname);
                 int userId = tempUserId != 0 ? tempUserId : userService.save(user);
 
