@@ -1,6 +1,6 @@
 package com.epam.springmvc.service;
 
-import com.epam.springmvc.dao.PhoneNumberDao;
+import com.epam.springmvc.dao.PhoneUserAccountDao;
 import com.epam.springmvc.model.PhoneUserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,62 +9,62 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class PhoneNumberServiceImpl implements PhoneNumberService {
+public class PhoneUserAccountServiceImpl implements PhoneUserAccountService {
 
-    private PhoneNumberDao phoneNumberDao;
+    private PhoneUserAccountDao phoneUserAccountDao;
 
     @Autowired
-    public PhoneNumberServiceImpl(PhoneNumberDao phoneNumberDao) {
-        this.phoneNumberDao = phoneNumberDao;
+    public PhoneUserAccountServiceImpl(PhoneUserAccountDao phoneUserAccountDao) {
+        this.phoneUserAccountDao = phoneUserAccountDao;
     }
 
     @Override
     public List<PhoneUserAccount> findAll() {
-        return phoneNumberDao.findAll();
+        return phoneUserAccountDao.findAll();
     }
 
     @Override
     public PhoneUserAccount getById(int id) {
-        return phoneNumberDao.getById(id);
+        return phoneUserAccountDao.getById(id);
     }
 
     @Override
     public void deleteById(int id) {
-        phoneNumberDao.deleteById(id);
+        phoneUserAccountDao.deleteById(id);
     }
 
     @Override
     public void update(PhoneUserAccount phoneUserAccount) {
-        phoneNumberDao.update(phoneUserAccount);
+        phoneUserAccountDao.update(phoneUserAccount);
     }
 
     @Override
     public int save(PhoneUserAccount phoneUserAccount) {
-        return phoneNumberDao.save(phoneUserAccount);
+        return phoneUserAccountDao.save(phoneUserAccount);
     }
 
     @Override
     public int getUserIdByPhoneNumber(String phoneNumberValue) {
-        return phoneNumberDao.getUserIdByPhoneNumber(phoneNumberValue);
+        return phoneUserAccountDao.getUserIdByPhoneNumber(phoneNumberValue);
     }
 
     @Override
     public Set<String> getPhoneNumberValuesByUserId(int userId) {
-        return phoneNumberDao.getPhoneNumberValuesByUserId(userId);
+        return phoneUserAccountDao.getPhoneNumberValuesByUserId(userId);
     }
 
     @Override
     public List<PhoneUserAccount> getPhoneNumbersByPhoneUserId(int userId) {
-        return phoneNumberDao.getPhoneNumberByPhoneUserId(userId);
+        return phoneUserAccountDao.getPhoneNumberByPhoneUserId(userId);
     }
 
     @Override
     public PhoneUserAccount getPhoneNumberByValue(String phoneNumber) {
-        return phoneNumberDao.getPhoneNumberByValue(phoneNumber);
+        return phoneUserAccountDao.getPhoneNumberByValue(phoneNumber);
     }
 
     @Override
     public boolean checkIfExistsByValue(String phoneNumberValue) {
-        return phoneNumberDao.checkIfExistsByValue(phoneNumberValue) == 1;
+        return phoneUserAccountDao.checkIfExistsByValue(phoneNumberValue) == 1;
     }
 }

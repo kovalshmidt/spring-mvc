@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface PhoneNumberDao {
+public interface PhoneUserAccountDao {
 
     List<PhoneUserAccount> findAll();
 

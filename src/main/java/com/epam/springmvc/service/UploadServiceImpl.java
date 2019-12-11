@@ -21,13 +21,13 @@ import java.util.Set;
 public class UploadServiceImpl implements UploadService {
 
     private PhoneUserService phoneUserService;
-    private PhoneNumberService phoneNumberService;
+    private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
 
     @Autowired
-    public UploadServiceImpl(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
+    public UploadServiceImpl(PhoneUserService phoneUserService, PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService) {
         this.phoneUserService = phoneUserService;
-        this.phoneNumberService = phoneNumberService;
+        this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
     }
 
@@ -52,7 +52,7 @@ public class UploadServiceImpl implements UploadService {
 
                 for (String key : keys) {
 
-                    if (phoneNumberService.checkIfExistsByValue(key)) {
+                    if (phoneUserAccountService.checkIfExistsByValue(key)) {
                         log.warn("Phone number: " + key + " already exists");
                         log.warn("Phone number: " + key + " of User: " + fullName + " was not added");
                         continue;
@@ -68,7 +68,7 @@ public class UploadServiceImpl implements UploadService {
                     phoneUserAccount.setPhoneNumber(key);
                     phoneUserAccount.setPhoneUserId(userId);
                     phoneUserAccount.setPhoneCompanyId(companyId);
-                    phoneNumberService.save(phoneUserAccount);
+                    phoneUserAccountService.save(phoneUserAccount);
                 }
             }
 

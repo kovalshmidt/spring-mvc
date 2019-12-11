@@ -5,7 +5,7 @@ import com.epam.springmvc.model.PhoneUserAccount;
 import java.util.List;
 import java.util.Set;
 
-public interface PhoneNumberService {
+public interface PhoneUserAccountService {
 
     List<PhoneUserAccount> findAll();
 

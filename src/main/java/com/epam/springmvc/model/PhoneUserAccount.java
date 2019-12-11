@@ -3,6 +3,8 @@ package com.epam.springmvc.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class PhoneUserAccount {
@@ -11,6 +13,7 @@ public class PhoneUserAccount {
     private String phoneNumber;
     private int phoneUserId;
     private int phoneCompanyId;
+    private BigDecimal amount;
 
     public PhoneUserAccount() {
     }

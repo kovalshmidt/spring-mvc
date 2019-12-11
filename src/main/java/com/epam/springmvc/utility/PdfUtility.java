@@ -3,7 +3,7 @@ package com.epam.springmvc.utility;
 import com.epam.springmvc.model.PhoneUserAccount;
 import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.service.PhoneCompanyService;
-import com.epam.springmvc.service.PhoneNumberService;
+import com.epam.springmvc.service.PhoneUserAccountService;
 import com.epam.springmvc.service.PhoneUserService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -23,13 +23,13 @@ public class PdfUtility {
     public static final String FILE_NAME = "itext.pdf";
 
     private PhoneUserService phoneUserService;
-    private PhoneNumberService phoneNumberService;
+    private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
 
     @Autowired
-    public PdfUtility(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService, PhoneCompanyService phoneCompanyService) {
+    public PdfUtility(PhoneUserService phoneUserService, PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService) {
         this.phoneUserService = phoneUserService;
-        this.phoneNumberService = phoneNumberService;
+        this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
     }
 
@@ -88,7 +88,7 @@ public class PdfUtility {
             cell.setRowspan(countOfNumbers);
             table.addCell(cell);
 
-            List<PhoneUserAccount> phoneUserAccounts = phoneNumberService.getPhoneNumbersByPhoneUserId(userId);
+            List<PhoneUserAccount> phoneUserAccounts = phoneUserAccountService.getPhoneNumbersByPhoneUserId(userId);
 
             for (PhoneUserAccount phoneUserAccount : phoneUserAccounts) {
                 String companyName = phoneCompanyService.getById(phoneUserAccount.getPhoneCompanyId()).getCompanyName();

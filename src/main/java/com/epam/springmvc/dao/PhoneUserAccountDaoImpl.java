@@ -1,6 +1,6 @@
 package com.epam.springmvc.dao;
 
-import com.epam.springmvc.mapper.PhoneNumberMapper;
+import com.epam.springmvc.mapper.PhoneUserAccountMapper;
 import com.epam.springmvc.model.PhoneUserAccount;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +17,25 @@ import java.util.Set;
 
 @Slf4j
 @Repository
-public class PhoneNumberDaoImpl implements PhoneNumberDao {
+public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
 
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PhoneNumberDaoImpl(JdbcTemplate jdbcTemplate) {
+    public PhoneUserAccountDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public List<PhoneUserAccount> findAll() {
         String sql = "SELECT * FROM phoneUserAccount";
-        return jdbcTemplate.query(sql, new PhoneNumberMapper());
+        return jdbcTemplate.query(sql, new PhoneUserAccountMapper());
     }
 
     @Override
     public PhoneUserAccount getById(int id) {
         String sql = "SELECT * FROM phoneUserAccount WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new PhoneNumberMapper(), id);
+        return jdbcTemplate.queryForObject(sql, new PhoneUserAccountMapper(), id);
     }
 
     @Override
@@ -83,14 +83,14 @@ public class PhoneNumberDaoImpl implements PhoneNumberDao {
     @Override
     public List<PhoneUserAccount> getPhoneNumberByPhoneUserId(int userPhoneId) {
         String sql = "SELECT * FROM phoneUserAccount WHERE phoneUser_id = ?";
-        return jdbcTemplate.query(sql, new PhoneNumberMapper(), userPhoneId);
+        return jdbcTemplate.query(sql, new PhoneUserAccountMapper(), userPhoneId);
     }
 
     @Override
     public PhoneUserAccount getPhoneNumberByValue(String phoneNumberValue) {
         String sql = "SELECT * FROM phoneUserAccount WHERE phoneNumber = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new PhoneNumberMapper(), phoneNumberValue);
+            return jdbcTemplate.queryForObject(sql, new PhoneUserAccountMapper(), phoneNumberValue);
         } catch (EmptyResultDataAccessException e) {
             log.warn("No rows found with such phone number value: " + phoneNumberValue);
             return null;

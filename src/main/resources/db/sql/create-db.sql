@@ -14,11 +14,12 @@ create table phoneUser
 
 create table phoneUserAccount
 (
-    id               int auto_increment
+    id              int auto_increment
         primary key,
-    phoneNumber varchar(255) null,
-    phoneCompany_id  int          null,
-    phoneUser_id     int          null,
+    phoneNumber     varchar(255)      null,
+    amount          decimal default 0 not null,
+    phoneCompany_id int               null,
+    phoneUser_id    int               null,
     constraint phoneCompany___fk
         foreign key (phoneCompany_id) references phoneCompany (id)
             on update cascade on delete cascade,

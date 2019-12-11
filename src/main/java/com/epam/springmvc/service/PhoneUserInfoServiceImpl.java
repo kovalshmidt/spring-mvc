@@ -13,15 +13,15 @@ import java.util.Optional;
 public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
 
     private PhoneUserService phoneUserService;
-    private PhoneNumberService phoneNumberService;
+    private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
     private UserService userService;
 
     @Autowired
-    public PhoneUserInfoServiceImpl(PhoneUserService phoneUserService, PhoneNumberService phoneNumberService,
+    public PhoneUserInfoServiceImpl(PhoneUserService phoneUserService, PhoneUserAccountService phoneUserAccountService,
                                     PhoneCompanyService phoneCompanyService, UserService userService) {
         this.phoneUserService = phoneUserService;
-        this.phoneNumberService = phoneNumberService;
+        this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
         this.userService = userService;
     }
@@ -38,7 +38,7 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
             int phoneCompanyId = phoneCompanyService.save(phoneCompany);
 
             PhoneUserAccount phoneUserAccount = new PhoneUserAccount(entry.getValue(), userId, phoneCompanyId);
-            phoneNumberService.save(phoneUserAccount);
+            phoneUserAccountService.save(phoneUserAccount);
         }
     }
 
@@ -47,7 +47,7 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
         PhoneUserInfo phoneUserInfo = new PhoneUserInfo();
 
         //Retrieve the PhoneNumbers
-        List<PhoneUserAccount> phoneUserAccounts = phoneNumberService.getPhoneNumbersByPhoneUserId(id);
+        List<PhoneUserAccount> phoneUserAccounts = phoneUserAccountService.getPhoneNumbersByPhoneUserId(id);
         Map<String, String> phoneInfo = new HashMap<>();
         if (phoneUserAccounts.isEmpty()) {
             phoneUserInfo.setPhoneInfo(phoneInfo);
