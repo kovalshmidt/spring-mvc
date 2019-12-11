@@ -46,7 +46,7 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
 
     @Override
     public void update(PhoneUserAccount phoneUserAccount) {
-        String sql = "UPDATE phoneUserAccount SET phoneNumber = ?, phoneUser_id = ?, phoneCompany_id = ? WHERE id = ?";
+        String sql = "UPDATE phoneUserAccount SET phoneNumber = ?, user_id = ?, phoneCompany_id = ? WHERE id = ?";
         jdbcTemplate.update(sql, phoneUserAccount.getPhoneNumber(), phoneUserAccount.getPhoneUserId(), phoneUserAccount.getPhoneCompanyId(),
                 phoneUserAccount.getId());
     }
@@ -55,7 +55,7 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
     public int save(PhoneUserAccount phoneUserAccount) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO phoneUserAccount (phoneNumber, phoneUser_id, phoneCompany_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO phoneUserAccount (phoneNumber, user_id, phoneCompany_id) VALUES (?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -70,19 +70,19 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
 
     @Override
     public int getUserIdByPhoneNumber(String phoneNumberValue) {
-        String sql = "SELECT phoneUser_id FROM phoneUserAccount WHERE phoneNumber = ?";
+        String sql = "SELECT user_id FROM phoneUserAccount WHERE phoneNumber = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumberValue);
     }
 
     @Override
     public Set<String> getPhoneNumberValuesByUserId(int userId) {
-        String sql = "SELECT phoneNumber FROM phoneUserAccount WHERE phoneUser_id = ?";
+        String sql = "SELECT phoneNumber FROM phoneUserAccount WHERE user_id = ?";
         return jdbcTemplate.queryForObject(sql, Set.class, userId);
     }
 
     @Override
     public List<PhoneUserAccount> getPhoneNumberByPhoneUserId(int userPhoneId) {
-        String sql = "SELECT * FROM phoneUserAccount WHERE phoneUser_id = ?";
+        String sql = "SELECT * FROM phoneUserAccount WHERE user_id = ?";
         return jdbcTemplate.query(sql, new PhoneUserAccountMapper(), userPhoneId);
     }
 
@@ -101,5 +101,11 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
     public int checkIfExistsByValue(String phoneNumberValue) {
         String sql = "SELECT COUNT(1) FROM phoneUserAccount WHERE phoneNumber = ?";
         return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumberValue);
+    }
+
+    @Override
+    public int getNumberOfPhonesNumbersByUserId(int id) {
+        String sql = "SELECT COUNT(*) FROM phoneUserAccount WHERE user_id = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, id);
     }
 }

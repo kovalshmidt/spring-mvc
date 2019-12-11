@@ -1,10 +1,10 @@
 package com.epam.springmvc.utility;
 
 import com.epam.springmvc.model.PhoneUserAccount;
-import com.epam.springmvc.model.PhoneUser;
+import com.epam.springmvc.model.User;
 import com.epam.springmvc.service.PhoneCompanyService;
 import com.epam.springmvc.service.PhoneUserAccountService;
-import com.epam.springmvc.service.PhoneUserService;
+import com.epam.springmvc.service.UserService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -22,15 +22,16 @@ public class PdfUtility {
 
     public static final String FILE_NAME = "itext.pdf";
 
-    private PhoneUserService phoneUserService;
     private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
+    private UserService userService;
 
     @Autowired
-    public PdfUtility(PhoneUserService phoneUserService, PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService) {
-        this.phoneUserService = phoneUserService;
+    public PdfUtility(PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService,
+                      UserService userService) {
         this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
+        this.userService = userService;
     }
 
     public Document createUsersPdf() {
@@ -75,16 +76,16 @@ public class PdfUtility {
 
         cell = new PdfPCell(new Phrase("FullName", f));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("PhoneUserAccount", f));
+        cell = new PdfPCell(new Phrase("PhoneNumber", f));
         table.addCell(cell);
         cell = new PdfPCell(new Phrase("PhoneCompany", f));
         table.addCell(cell);
 
-        List<PhoneUser> phoneUsers = phoneUserService.findAll();
-        for (PhoneUser phoneUser : phoneUsers) {
-            int userId = phoneUser.getId();
-            int countOfNumbers = phoneUserService.getNumberOfPhonesNumbersById(userId);
-            cell = new PdfPCell(new Phrase(phoneUser.getFullName()));
+        List<User> users = userService.findAll();
+        for (User user : users) {
+            int userId = user.getId();
+            int countOfNumbers = phoneUserAccountService.getNumberOfPhonesNumbersByUserId(userId);
+            cell = new PdfPCell(new Phrase(user.getName() + " " + user.getSurname()));
             cell.setRowspan(countOfNumbers);
             table.addCell(cell);
 

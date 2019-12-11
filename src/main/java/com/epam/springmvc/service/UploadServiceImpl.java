@@ -2,7 +2,7 @@ package com.epam.springmvc.service;
 
 import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneUserAccount;
-import com.epam.springmvc.model.PhoneUser;
+import com.epam.springmvc.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,15 +20,16 @@ import java.util.Set;
 @Service
 public class UploadServiceImpl implements UploadService {
 
-    private PhoneUserService phoneUserService;
     private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
+    private UserService userService;
 
     @Autowired
-    public UploadServiceImpl(PhoneUserService phoneUserService, PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService) {
-        this.phoneUserService = phoneUserService;
+    public UploadServiceImpl(PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService,
+                             UserService userService) {
         this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
+        this.userService = userService;
     }
 
     public boolean uploadFileFromJson(MultipartFile file) {
@@ -44,17 +45,19 @@ public class UploadServiceImpl implements UploadService {
                 Set<String> keys = phoneInfoObject.keySet();
 
                 //Create and save User
-                PhoneUser phoneUser = new PhoneUser();
-                String fullName = (String) userObject.get("fullName");
-                phoneUser.setFullName(fullName);
-                int tempUserId = phoneUserService.checkIfUserExistsByFullName(fullName);
-                int userId = tempUserId != 0 ? tempUserId : phoneUserService.save(phoneUser);
+                User user = new User();
+                String name = (String) userObject.get("name");
+                String surname = (String) userObject.get("surname");
+                user.setName(name);
+                user.setSurname(surname);
+                int tempUserId = userService.checkIfUserExistsByNameAndSurname(name, surname);
+                int userId = tempUserId != 0 ? tempUserId : userService.save(user);
 
                 for (String key : keys) {
 
                     if (phoneUserAccountService.checkIfExistsByValue(key)) {
                         log.warn("Phone number: " + key + " already exists");
-                        log.warn("Phone number: " + key + " of User: " + fullName + " was not added");
+                        log.warn("Phone number: " + key + " of User: " + name + " " + surname + " was not added");
                         continue;
                     }
 

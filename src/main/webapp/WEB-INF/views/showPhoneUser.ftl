@@ -48,12 +48,13 @@
                     <th scope="col">PhoneNumber</th>
                     <th scope="col">PhoneCompany</th>
                 </tr>
-                <#assign count = 0>
+                </thead>
+                <#assign count = 1>
                 <#list phoneUserInfo.phoneInfo as key, value>
                     <tr>
-                        <#if count == 0 >
+                        <#if count == 1 >
                             <th scope="row">${count}</th>
-                            <td>${phoneUserInfo.fullName}</td>
+                            <td>${phoneUserInfo.name} ${phoneUserInfo.surname}</td>
                             <#assign count = count + 1>
                         <#else>
                             <th scope="row"></th>

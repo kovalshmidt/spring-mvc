@@ -41,7 +41,10 @@
 
     <!-- Welcome -->
     <div class="row margins-top-bottom justify-content-center">
-        <h1 class="text-center"> Welcome ${phoneUserInfo.fullName}
+        <h1 class="text-center"> Welcome
+            <#if phoneUserInfo.name?has_content>
+                ${phoneUserInfo.name} ${phoneUserInfo.surname}
+            </#if>
             <#if admin == true>
             to Administration page</h1>
         <#else>

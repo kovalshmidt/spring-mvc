@@ -69,7 +69,7 @@
                         <tr>
                         <#if countPhones == 0 >
                             <th scope="row">${count}</th>
-                            <td>${userInfo.fullName}</td>
+                            <td>${userInfo.name} ${userInfo.surname}</td>
                             <#assign count = count + 1>
                         <#else>
                             <th scope="row"></th>

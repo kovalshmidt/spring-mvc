@@ -1,10 +1,9 @@
 package com.epam.springmvc.controller;
 
 
-import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.PhoneUserInfo;
+import com.epam.springmvc.model.User;
 import com.epam.springmvc.service.PhoneUserInfoService;
-import com.epam.springmvc.service.PhoneUserService;
 import com.epam.springmvc.service.UserService;
 import com.epam.springmvc.utility.PdfUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ import static com.epam.springmvc.utility.PdfUtility.FILE_NAME;
 @Controller
 public class MainController {
 
-    private PhoneUserService phoneUserService;
     private PdfUtility pdfUtility;
     private PhoneUserInfoService phoneUserInfoService;
     private UserService userService;
@@ -40,9 +38,8 @@ public class MainController {
     private static boolean isAdmin;
 
     @Autowired
-    public MainController(PhoneUserService phoneUserService, PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService,
+    public MainController(PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService,
                           UserService userService) {
-        this.phoneUserService = phoneUserService;
         this.pdfUtility = pdfUtility;
         this.phoneUserInfoService = phoneUserInfoService;
         this.userService = userService;
@@ -63,9 +60,9 @@ public class MainController {
     public String getAllPhoneUsers(Model model) {
 
         List<PhoneUserInfo> phoneUserInfos = new ArrayList<>();
-        List<Integer> usersIds = phoneUserService.findAll().stream().map(PhoneUser::getId).collect(Collectors.toList());
+        List<Integer> usersIds = userService.findAll().stream().map(User::getId).collect(Collectors.toList());
         for (Integer id : usersIds) {
-            phoneUserInfos.add(phoneUserInfoService.createByPhoneUserId(id));
+            phoneUserInfos.add(phoneUserInfoService.createByUserId(id));
         }
 
         model.addAttribute("phoneUserInfos", phoneUserInfos);
@@ -81,7 +78,7 @@ public class MainController {
     @GetMapping(value = "/user/{id}")
     public String getById(@PathVariable("id") int id, Model model) {
 
-        PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByPhoneUserId(id);
+        PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByUserId(id);
         model.addAttribute("phoneUserInfo", phoneUserInfo);
         model.addAttribute("hasPhones", phoneUserInfo.getPhoneUserId() != 0);
 

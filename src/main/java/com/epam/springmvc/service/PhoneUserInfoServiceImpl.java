@@ -11,16 +11,13 @@ import java.util.Optional;
 
 @Service
 public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
-
-    private PhoneUserService phoneUserService;
     private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
     private UserService userService;
 
     @Autowired
-    public PhoneUserInfoServiceImpl(PhoneUserService phoneUserService, PhoneUserAccountService phoneUserAccountService,
+    public PhoneUserInfoServiceImpl(PhoneUserAccountService phoneUserAccountService,
                                     PhoneCompanyService phoneCompanyService, UserService userService) {
-        this.phoneUserService = phoneUserService;
         this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
         this.userService = userService;
@@ -29,8 +26,8 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
     @Override
     public void save(PhoneUserInfo phoneUserInfo) {
 
-        PhoneUser phoneUser = new PhoneUser(phoneUserInfo.getFullName());
-        int userId = phoneUserService.save(phoneUser);
+        User phoneUser = new User(phoneUserInfo.getName(), phoneUserInfo.getSurname());
+        int userId = userService.save(phoneUser);
 
         for (Map.Entry<String, String> entry : phoneUserInfo.getPhoneInfo().entrySet()) {
 
@@ -43,7 +40,7 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
     }
 
     @Override
-    public PhoneUserInfo createByPhoneUserId(int id) {
+    public PhoneUserInfo createByUserId(int id) {
         PhoneUserInfo phoneUserInfo = new PhoneUserInfo();
 
         //Retrieve the PhoneNumbers
@@ -54,33 +51,18 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
         } else {
             //Populate the phoneInfo map with 'key:phoneNumber' and 'value:companyName'
             for (PhoneUserAccount phoneUserAccount : phoneUserAccounts) {
-                String phoneNumberValue = phoneUserAccount.getPhoneNumber();
+                String phoneNumber = phoneUserAccount.getPhoneNumber();
                 String companyName = phoneCompanyService.getById(phoneUserAccount.getPhoneCompanyId()).getCompanyName();
-                phoneInfo.put(phoneNumberValue, companyName);
+                phoneInfo.put(phoneNumber, companyName);
             }
             phoneUserInfo.setPhoneInfo(phoneInfo);
         }
 
-        //Find PhoneUser and set to PhoneUserInfo 'phoneUserId' and 'fullName'
-        PhoneUser phoneUser = Optional.ofNullable(phoneUserService.getById(id)).orElse(new PhoneUser(""));
-        phoneUserInfo.setPhoneUserId(phoneUser.getId());
-        phoneUserInfo.setFullName(phoneUser.getFullName());
-
-        return phoneUserInfo;
-    }
-
-    @Override
-    public PhoneUserInfo createByUserId(int id) {
-
-        //Find User and set to PhoneUserInfo data from him
-        User user = userService.getById(id);
-        if (user == null) {
-            return new PhoneUserInfo();
-        }
-
-        //Get PhoneUserInfo and set data 'email' and 'roles' from User
-        int phoneUserId = user.getPhoneUserId();
-        PhoneUserInfo phoneUserInfo = createByPhoneUserId(phoneUserId);
+        //Find PhoneUser and set to PhoneUserInfo 'phoneUserId' and 'name' 'surname' 'email' and 'roles'
+        User user = Optional.ofNullable(userService.getById(id)).orElse(new User("", ""));
+        phoneUserInfo.setPhoneUserId(user.getId());
+        phoneUserInfo.setName(user.getName());
+        phoneUserInfo.setSurname(user.getSurname());
         phoneUserInfo.setEmail(user.getEmail());
         phoneUserInfo.setRoles(user.getRoles());
 

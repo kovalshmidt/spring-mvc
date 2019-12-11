@@ -42,7 +42,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (!user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userDao.save(user);
     }
 
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByPhoneUserId(int id) {
-        return userDao.findByPhoneUserId(id);
+    public int checkIfUserExistsByNameAndSurname(String name, String surname) {
+        return userDao.checkIfUserExistsByNameAndSurname(name, surname);
     }
 }

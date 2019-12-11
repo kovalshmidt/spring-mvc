@@ -11,7 +11,8 @@ import java.util.Map;
 public class PhoneUserInfo {
 
     private int phoneUserId;
-    private String fullName;
+    private String name;
+    private String surname;
     private String email;
     private String roles;
     private Map<String, String> phoneInfo;

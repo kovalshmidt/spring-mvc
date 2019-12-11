@@ -5,11 +5,17 @@ create table phoneCompany
     companyName varchar(255) null
 );
 
-create table phoneUser
+create table users
 (
     id       int auto_increment
         primary key,
-    fullName varchar(30) null
+    name     varchar(30)  null,
+    surname  varchar(30)  null,
+    email    varchar(30)  not null,
+    password text         not null,
+    roles    varchar(100) not null,
+    constraint users_email_uindex
+        unique (email)
 );
 
 create table phoneUserAccount
@@ -19,33 +25,12 @@ create table phoneUserAccount
     phoneNumber     varchar(255)      null,
     amount          decimal default 0 not null,
     phoneCompany_id int               null,
-    phoneUser_id    int               null,
-    constraint phoneCompany___fk
+    user_id         int               null,
+    constraint phoneUserAccount_phoneCompany_id_fk
         foreign key (phoneCompany_id) references phoneCompany (id)
             on update cascade on delete cascade,
-    constraint phoneUser___fk
-        foreign key (phoneUser_id) references phoneUser (id)
+    constraint phoneUserAccount_users_id_fk
+        foreign key (user_id) references users (id)
             on update cascade on delete cascade
 );
-
-create table users
-(
-    id           int auto_increment,
-    name         varchar(30)  null,
-    surname      varchar(30)  null,
-    email        varchar(30)  not null,
-    password     text         not null,
-    roles        varchar(100) not null,
-    phoneUser_id int          null,
-    constraint users_email_uindex
-        unique (email),
-    constraint users_id_uindex
-        unique (id),
-    constraint phoneUser_id_fk
-        foreign key (phoneUser_id) references phoneUser (id)
-            on update cascade on delete cascade
-);
-
-alter table users
-    add primary key (id);
 

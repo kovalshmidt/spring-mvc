@@ -49,7 +49,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE user SET name = ? surname = ? email = ? password = ? roles = ? WHERE id = ?";
+        String sql = "UPDATE users SET name = ?, surname = ?, email = ?, password = ?, roles = ? WHERE id = ?";
         jdbcTemplate.update(sql, user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getRoles(), user.getId());
     }
 
@@ -85,14 +85,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByPhoneUserId(int id) {
-        String sql = "SELECT * FROM users WHERE phoneUser_id = ?";
+    public int checkIfUserExistsByNameAndSurname(String name, String surname) {
+        String sql = "SELECT id FROM users WHERE name = ? AND surname = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new UserMapper(), id);
-        } catch (
-                EmptyResultDataAccessException e) {
-            System.out.println("No rows found with such user phone id: " + id);
-            return null;
+            return jdbcTemplate.queryForObject(sql, Integer.class, name, surname);
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println("No user found with name: " + name + " and surname: " + surname);
+            return 0;
         }
     }
 }

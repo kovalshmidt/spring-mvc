@@ -20,6 +20,6 @@ public interface UserDao {
 
     User findByEmail(String email);
 
-    User findByPhoneUserId(int id);
+    int checkIfUserExistsByNameAndSurname(String name, String surname);
 
 }

@@ -18,5 +18,5 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    User findByPhoneUserId(int id);
+    int checkIfUserExistsByNameAndSurname(String name, String surname);
 }

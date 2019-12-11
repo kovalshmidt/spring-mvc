@@ -28,4 +28,6 @@ public interface PhoneUserAccountDao {
     PhoneUserAccount getPhoneNumberByValue(String phoneNumberValue);
 
     int checkIfExistsByValue(String phoneNumberValue);
+
+    int getNumberOfPhonesNumbersByUserId(int id);
 }

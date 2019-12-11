@@ -26,4 +26,6 @@ public interface PhoneUserAccountService {
     PhoneUserAccount getPhoneNumberByValue(String phoneNumber);
 
     boolean checkIfExistsByValue(String phoneNumberValue);
+
+    int getNumberOfPhonesNumbersByUserId(int id);
 }

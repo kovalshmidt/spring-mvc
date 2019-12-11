@@ -67,4 +67,9 @@ public class PhoneUserAccountServiceImpl implements PhoneUserAccountService {
     public boolean checkIfExistsByValue(String phoneNumberValue) {
         return phoneUserAccountDao.checkIfExistsByValue(phoneNumberValue) == 1;
     }
+
+    @Override
+    public int getNumberOfPhonesNumbersByUserId(int id) {
+        return phoneUserAccountDao.getNumberOfPhonesNumbersByUserId(id);
+    }
 }

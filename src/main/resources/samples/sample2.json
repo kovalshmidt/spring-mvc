@@ -1,7 +1,8 @@
 {
   "phoneDirectory": [
     {
-      "fullName": "Vitaliy Kovalevskyy",
+      "name": "Vitaliy ",
+      "surname" : "Kovalevskyy",
       "phoneNumbersInfo": {
         "380730214599": "lifecell",
         "380970222306": "kyivstar",
@@ -9,14 +10,16 @@
       }
     },
     {
-      "fullName": "Prytula Andriy",
+      "name": "Andriy ",
+      "surname" : "Prytula",
       "phoneNumbersInfo": {
         "380950200311": "vodafone",
         "380630214312": "kyivstar"
       }
     },
     {
-      "fullName": "Melnyk Sergiy",
+      "name": "Sergiy ",
+      "surname" : "Melnyk",
       "phoneNumbersInfo": {
         "380730347355": "lifecell",
         "380977834034": "kyivstar",
@@ -24,7 +27,8 @@
       }
     },
     {
-      "fullName": "Stepan Petrenko",
+      "name": "Stepan ",
+      "surname" : "Petrenko",
       "phoneNumbersInfo": {
         "380970752343": "kyivstar",
         "380736973589": "lifecell"

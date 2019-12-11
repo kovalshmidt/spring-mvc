@@ -1,6 +1,5 @@
 package com.epam.springmvc.controller;
 
-import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.model.User;
 import com.epam.springmvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class AuthController {
      */
     @GetMapping("/sign_up")
     public String getSignUp(Model model) {
-        model.addAttribute("user", new PhoneUser());
+        model.addAttribute("user", new User());
         return "/auth/sign_up";
     }
 
