@@ -5,18 +5,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PhoneNumber {
+public class PhoneUserAccount {
 
     private long id;
-    private String phoneNumberValue;
+    private String phoneNumber;
     private int phoneUserId;
     private int phoneCompanyId;
 
-    public PhoneNumber() {
+    public PhoneUserAccount() {
     }
 
-    public PhoneNumber(String phoneNumberValue, int phoneUserId, int phoneCompanyId) {
-        this.phoneNumberValue = phoneNumberValue;
+    public PhoneUserAccount(String phoneNumber, int phoneUserId, int phoneCompanyId) {
+        this.phoneNumber = phoneNumber;
         this.phoneUserId = phoneUserId;
         this.phoneCompanyId = phoneCompanyId;
     }

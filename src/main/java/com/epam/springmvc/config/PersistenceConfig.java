@@ -17,7 +17,7 @@ public class PersistenceConfig {
     @Bean
     public JdbcTemplate getJdbcTemplate() {
         //Choose the Datasource between MySQL and H2
-        return new JdbcTemplate(getDataSourceH2());
+        return new JdbcTemplate(getDataSourceMysql());
     }
 
     /**
@@ -45,7 +45,7 @@ public class PersistenceConfig {
         dataSource.setUrl("jdbc:mysql://localhost:3306/phones?userSll=false?createDatabaseIfNotExist=true");
         dataSource.setUsername("root");
         dataSource.setPassword("nettuno27");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         return dataSource;
     }
 }

@@ -1,4 +1,4 @@
-DELETE FROM phoneNumber;
+DELETE FROM phoneUserAccount;
 DELETE FROM phoneUser;
 DELETE FROM phoneCompany;
 DELETE FROM users;
@@ -13,5 +13,5 @@ INSERT INTO users (id, email, password, roles) VALUES (33, 'admin@admin.com', '$
 INSERT INTO phoneCompany (id, companyName) VALUES (22, 'beeline');
 INSERT INTO phoneCompany (id, companyName) VALUES (23, 'vodafone');
 
-INSERT INTO phoneNumber (id, phoneNumberValue, phoneCompany_id, phoneUser_id) VALUES (27, '380534265345', 22, 1);
-INSERT INTO phoneNumber (id, phoneNumberValue, phoneCompany_id, phoneUser_id) VALUES (28, '380534265344', 22, 2);
+INSERT INTO phoneUserAccount (id, phoneNumber, phoneCompany_id, phoneUser_id) VALUES (27, '380534265345', 22, 1);
+INSERT INTO phoneUserAccount (id, phoneNumber, phoneCompany_id, phoneUser_id) VALUES (28, '380534265344', 22, 2);

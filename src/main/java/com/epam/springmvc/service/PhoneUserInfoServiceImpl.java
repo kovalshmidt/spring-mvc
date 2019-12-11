@@ -37,8 +37,8 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
             PhoneCompany phoneCompany = new PhoneCompany(entry.getKey());
             int phoneCompanyId = phoneCompanyService.save(phoneCompany);
 
-            PhoneNumber phoneNumber = new PhoneNumber(entry.getValue(), userId, phoneCompanyId);
-            phoneNumberService.save(phoneNumber);
+            PhoneUserAccount phoneUserAccount = new PhoneUserAccount(entry.getValue(), userId, phoneCompanyId);
+            phoneNumberService.save(phoneUserAccount);
         }
     }
 
@@ -47,15 +47,15 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
         PhoneUserInfo phoneUserInfo = new PhoneUserInfo();
 
         //Retrieve the PhoneNumbers
-        List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByPhoneUserId(id);
+        List<PhoneUserAccount> phoneUserAccounts = phoneNumberService.getPhoneNumbersByPhoneUserId(id);
         Map<String, String> phoneInfo = new HashMap<>();
-        if (phoneNumbers.isEmpty()) {
+        if (phoneUserAccounts.isEmpty()) {
             phoneUserInfo.setPhoneInfo(phoneInfo);
         } else {
-            //Populate the phoneInfo map with 'key:phoneNumberValue' and 'value:companyName'
-            for (PhoneNumber phoneNumber : phoneNumbers) {
-                String phoneNumberValue = phoneNumber.getPhoneNumberValue();
-                String companyName = phoneCompanyService.getById(phoneNumber.getPhoneCompanyId()).getCompanyName();
+            //Populate the phoneInfo map with 'key:phoneNumber' and 'value:companyName'
+            for (PhoneUserAccount phoneUserAccount : phoneUserAccounts) {
+                String phoneNumberValue = phoneUserAccount.getPhoneNumber();
+                String companyName = phoneCompanyService.getById(phoneUserAccount.getPhoneCompanyId()).getCompanyName();
                 phoneInfo.put(phoneNumberValue, companyName);
             }
             phoneUserInfo.setPhoneInfo(phoneInfo);

@@ -1,6 +1,6 @@
 package com.epam.springmvc.dao;
 
-import com.epam.springmvc.model.PhoneNumber;
+import com.epam.springmvc.model.PhoneUserAccount;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,23 +9,23 @@ import java.util.Set;
 @Repository
 public interface PhoneNumberDao {
 
-    List<PhoneNumber> findAll();
+    List<PhoneUserAccount> findAll();
 
-    PhoneNumber getById(int id);
+    PhoneUserAccount getById(int id);
 
     void deleteById(int id);
 
-    void update(PhoneNumber phoneNumber);
+    void update(PhoneUserAccount phoneUserAccount);
 
-    int save(PhoneNumber phoneNumber);
+    int save(PhoneUserAccount phoneUserAccount);
 
     int getUserIdByPhoneNumber(String phoneNumberValue);
 
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
-    List<PhoneNumber> getPhoneNumberByPhoneUserId(int userPhoneId);
+    List<PhoneUserAccount> getPhoneNumberByPhoneUserId(int userPhoneId);
 
-    PhoneNumber getPhoneNumberByValue(String phoneNumberValue);
+    PhoneUserAccount getPhoneNumberByValue(String phoneNumberValue);
 
     int checkIfExistsByValue(String phoneNumberValue);
 }

@@ -1,29 +1,29 @@
 package com.epam.springmvc.service;
 
-import com.epam.springmvc.model.PhoneNumber;
+import com.epam.springmvc.model.PhoneUserAccount;
 
 import java.util.List;
 import java.util.Set;
 
 public interface PhoneNumberService {
 
-    List<PhoneNumber> findAll();
+    List<PhoneUserAccount> findAll();
 
-    PhoneNumber getById(int id);
+    PhoneUserAccount getById(int id);
 
     void deleteById(int id);
 
-    void update(PhoneNumber phoneNumber);
+    void update(PhoneUserAccount phoneUserAccount);
 
-    int save(PhoneNumber phoneNumber);
+    int save(PhoneUserAccount phoneUserAccount);
 
     int getUserIdByPhoneNumber(String phoneNumberValue);
 
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
-    List<PhoneNumber> getPhoneNumbersByPhoneUserId(int userId);
+    List<PhoneUserAccount> getPhoneNumbersByPhoneUserId(int userId);
 
-    PhoneNumber getPhoneNumberByValue(String phoneNumber);
+    PhoneUserAccount getPhoneNumberByValue(String phoneNumber);
 
     boolean checkIfExistsByValue(String phoneNumberValue);
 }

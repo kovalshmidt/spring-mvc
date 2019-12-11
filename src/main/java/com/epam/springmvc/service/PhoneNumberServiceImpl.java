@@ -1,7 +1,7 @@
 package com.epam.springmvc.service;
 
 import com.epam.springmvc.dao.PhoneNumberDao;
-import com.epam.springmvc.model.PhoneNumber;
+import com.epam.springmvc.model.PhoneUserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +19,12 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public List<PhoneNumber> findAll() {
+    public List<PhoneUserAccount> findAll() {
         return phoneNumberDao.findAll();
     }
 
     @Override
-    public PhoneNumber getById(int id) {
+    public PhoneUserAccount getById(int id) {
         return phoneNumberDao.getById(id);
     }
 
@@ -34,13 +34,13 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public void update(PhoneNumber phoneNumber) {
-        phoneNumberDao.update(phoneNumber);
+    public void update(PhoneUserAccount phoneUserAccount) {
+        phoneNumberDao.update(phoneUserAccount);
     }
 
     @Override
-    public int save(PhoneNumber phoneNumber) {
-        return phoneNumberDao.save(phoneNumber);
+    public int save(PhoneUserAccount phoneUserAccount) {
+        return phoneNumberDao.save(phoneUserAccount);
     }
 
     @Override
@@ -54,12 +54,12 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public List<PhoneNumber> getPhoneNumbersByPhoneUserId(int userId) {
-        return phoneNumberDao.getPhoneNumberByUserId(userId);
+    public List<PhoneUserAccount> getPhoneNumbersByPhoneUserId(int userId) {
+        return phoneNumberDao.getPhoneNumberByPhoneUserId(userId);
     }
 
     @Override
-    public PhoneNumber getPhoneNumberByValue(String phoneNumber) {
+    public PhoneUserAccount getPhoneNumberByValue(String phoneNumber) {
         return phoneNumberDao.getPhoneNumberByValue(phoneNumber);
     }
 

@@ -1,7 +1,7 @@
 package com.epam.springmvc.service;
 
 import com.epam.springmvc.model.PhoneCompany;
-import com.epam.springmvc.model.PhoneNumber;
+import com.epam.springmvc.model.PhoneUserAccount;
 import com.epam.springmvc.model.PhoneUser;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -63,12 +63,12 @@ public class UploadServiceImpl implements UploadService {
                     phoneCompany.setCompanyName((String) phoneInfoObject.get(key));
                     int companyId = phoneCompanyService.save(phoneCompany);
 
-                    //Create and save PhoneNumber
-                    PhoneNumber phoneNumber = new PhoneNumber();
-                    phoneNumber.setPhoneNumberValue(key);
-                    phoneNumber.setPhoneUserId(userId);
-                    phoneNumber.setPhoneCompanyId(companyId);
-                    phoneNumberService.save(phoneNumber);
+                    //Create and save PhoneUserAccount
+                    PhoneUserAccount phoneUserAccount = new PhoneUserAccount();
+                    phoneUserAccount.setPhoneNumber(key);
+                    phoneUserAccount.setPhoneUserId(userId);
+                    phoneUserAccount.setPhoneCompanyId(companyId);
+                    phoneNumberService.save(phoneUserAccount);
                 }
             }
 

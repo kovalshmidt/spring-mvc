@@ -70,7 +70,7 @@ public class PhoneUserDaoImpl implements PhoneUserDao {
 
     @Override
     public int getNumberOfPhonesNumbersById(int id) {
-        String sql = "SELECT COUNT(*) FROM phoneNumber WHERE phoneUser_id = ?";
+        String sql = "SELECT COUNT(*) FROM phoneUserAccount WHERE phoneUser_id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, id);
         } catch (EmptyResultDataAccessException e) {

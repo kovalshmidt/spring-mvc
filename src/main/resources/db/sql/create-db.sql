@@ -12,11 +12,11 @@ create table phoneUser
     fullName varchar(30) null
 );
 
-create table phoneNumber
+create table phoneUserAccount
 (
     id               int auto_increment
         primary key,
-    phoneNumberValue varchar(255) null,
+    phoneNumber varchar(255) null,
     phoneCompany_id  int          null,
     phoneUser_id     int          null,
     constraint phoneCompany___fk

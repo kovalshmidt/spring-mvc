@@ -1,6 +1,6 @@
 package com.epam.springmvc.utility;
 
-import com.epam.springmvc.model.PhoneNumber;
+import com.epam.springmvc.model.PhoneUserAccount;
 import com.epam.springmvc.model.PhoneUser;
 import com.epam.springmvc.service.PhoneCompanyService;
 import com.epam.springmvc.service.PhoneNumberService;
@@ -75,7 +75,7 @@ public class PdfUtility {
 
         cell = new PdfPCell(new Phrase("FullName", f));
         table.addCell(cell);
-        cell = new PdfPCell(new Phrase("PhoneNumber", f));
+        cell = new PdfPCell(new Phrase("PhoneUserAccount", f));
         table.addCell(cell);
         cell = new PdfPCell(new Phrase("PhoneCompany", f));
         table.addCell(cell);
@@ -88,12 +88,12 @@ public class PdfUtility {
             cell.setRowspan(countOfNumbers);
             table.addCell(cell);
 
-            List<PhoneNumber> phoneNumbers = phoneNumberService.getPhoneNumbersByPhoneUserId(userId);
+            List<PhoneUserAccount> phoneUserAccounts = phoneNumberService.getPhoneNumbersByPhoneUserId(userId);
 
-            for (PhoneNumber phoneNumber : phoneNumbers) {
-                String companyName = phoneCompanyService.getById(phoneNumber.getPhoneCompanyId()).getCompanyName();
+            for (PhoneUserAccount phoneUserAccount : phoneUserAccounts) {
+                String companyName = phoneCompanyService.getById(phoneUserAccount.getPhoneCompanyId()).getCompanyName();
 
-                table.addCell(phoneNumber.getPhoneNumberValue());
+                table.addCell(phoneUserAccount.getPhoneNumber());
                 table.addCell(companyName);
             }
         }
