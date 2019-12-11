@@ -81,9 +81,9 @@ public class PhoneNumberDaoImpl implements PhoneNumberDao {
     }
 
     @Override
-    public List<PhoneNumber> getPhoneNumberByUserId(int userId) {
+    public List<PhoneNumber> getPhoneNumberByPhoneUserId(int userPhoneId) {
         String sql = "SELECT * FROM phoneNumber WHERE phoneUser_id = ?";
-        return jdbcTemplate.query(sql, new PhoneNumberMapper(), userId);
+        return jdbcTemplate.query(sql, new PhoneNumberMapper(), userPhoneId);
     }
 
     @Override

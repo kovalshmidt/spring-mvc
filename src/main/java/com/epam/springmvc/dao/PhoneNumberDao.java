@@ -23,7 +23,7 @@ public interface PhoneNumberDao {
 
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
-    List<PhoneNumber> getPhoneNumberByUserId(int userId);
+    List<PhoneNumber> getPhoneNumberByPhoneUserId(int userPhoneId);
 
     PhoneNumber getPhoneNumberByValue(String phoneNumberValue);
 
