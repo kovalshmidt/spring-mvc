@@ -3,6 +3,7 @@
     {
       "name": "Vitaliy ",
       "surname" : "Kovalevskyy",
+      "email" : "kova@kova.com",
       "phoneNumbersInfo": {
         "380730214599": "lifecell",
         "380970222306": "kyivstar",
@@ -12,6 +13,7 @@
     {
       "name": "Andriy ",
       "surname" : "Prytula",
+      "email" : "pryt@pryt.com",
       "phoneNumbersInfo": {
         "380950200311": "vodafone",
         "380630214312": "kyivstar"
@@ -20,6 +22,7 @@
     {
       "name": "Sergiy ",
       "surname" : "Melnyk",
+      "email" : "meln@meln.com",
       "phoneNumbersInfo": {
         "380730347355": "lifecell",
         "380977834034": "kyivstar",
