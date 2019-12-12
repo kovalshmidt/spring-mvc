@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <div class="centered-form">
-        <form name="phoneUser" action="sign_up" method="post">
+        <form name="user" action="sign_up" method="post">
             <h2 class="text-center">Sign Up</h2>
             <div class="form-group">
                 <input name="name" type="text" class="form-control" placeholder="Name" required="required">

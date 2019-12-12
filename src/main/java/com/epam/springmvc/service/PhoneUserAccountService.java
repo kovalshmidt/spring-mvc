@@ -17,15 +17,17 @@ public interface PhoneUserAccountService {
 
     int save(PhoneUserAccount phoneUserAccount);
 
-    int getUserIdByPhoneNumber(String phoneNumberValue);
+    int getUserIdByPhoneNumber(String phoneNumber);
 
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
     List<PhoneUserAccount> getPhoneNumbersByPhoneUserId(int userId);
 
-    PhoneUserAccount getPhoneNumberByValue(String phoneNumber);
+    PhoneUserAccount getPhoneUserAccountByPhoneNumber(String phoneNumber);
 
     boolean checkIfExistsByValue(String phoneNumberValue);
 
     int getNumberOfPhonesNumbersByUserId(int id);
+
+    void changeMobileOperator(String phoneNumber, String newOperator);
 }

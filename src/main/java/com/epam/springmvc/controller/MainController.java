@@ -1,8 +1,11 @@
 package com.epam.springmvc.controller;
 
 
+import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneUserInfo;
 import com.epam.springmvc.model.User;
+import com.epam.springmvc.service.PhoneCompanyService;
+import com.epam.springmvc.service.PhoneUserAccountService;
 import com.epam.springmvc.service.PhoneUserInfoService;
 import com.epam.springmvc.service.UserService;
 import com.epam.springmvc.utility.PdfUtility;
@@ -13,8 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class MainController {
     private PdfUtility pdfUtility;
     private PhoneUserInfoService phoneUserInfoService;
     private UserService userService;
+    private PhoneCompanyService phoneCompanyService;
+    private PhoneUserAccountService phoneUserAccountService;
 
 
     private static int loggedUserId;
@@ -39,10 +43,13 @@ public class MainController {
 
     @Autowired
     public MainController(PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService,
-                          UserService userService) {
+                          UserService userService, PhoneCompanyService phoneCompanyService,
+                          PhoneUserAccountService phoneUserAccountService) {
         this.pdfUtility = pdfUtility;
         this.phoneUserInfoService = phoneUserInfoService;
         this.userService = userService;
+        this.phoneCompanyService = phoneCompanyService;
+        this.phoneUserAccountService = phoneUserAccountService;
     }
 
     /**
@@ -79,8 +86,12 @@ public class MainController {
     public String getById(@PathVariable("id") int id, Model model) {
 
         PhoneUserInfo phoneUserInfo = phoneUserInfoService.createByUserId(id);
+        List<String> operators = phoneCompanyService.findAll().stream()
+                .map(PhoneCompany::getCompanyName).collect(Collectors.toList());
+
         model.addAttribute("phoneUserInfo", phoneUserInfo);
         model.addAttribute("hasPhones", phoneUserInfo.getPhoneUserId() != 0);
+        model.addAttribute("operators", operators);
 
         model.addAttribute("admin", isAdmin);
         model.addAttribute("loggedUserId", loggedUserId);
@@ -132,6 +143,12 @@ public class MainController {
         model.addAttribute("loggedUserId", loggedUserId);
 
         return "homePage";
+    }
+
+    @RequestMapping(value = "/change_operator", method = RequestMethod.POST)
+    public String changeOperator(@ModelAttribute PhoneUserInfo.PhoneInfo phoneInfo) {
+        phoneUserAccountService.changeMobileOperator(phoneInfo.getPhoneNumber(), phoneInfo.getPhoneCompany());
+        return "redirect:user/" + loggedUserId;
     }
 
 }

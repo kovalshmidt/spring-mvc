@@ -9,6 +9,7 @@
     <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
     <#--     Scripts-->
     <script src="/resources/js/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="/resources/js/popper.js" type="text/javascript"></script>
     <script src="/resources/js/bootstrap.js" type="text/javascript"></script>
 </head>
 <body>
@@ -47,10 +48,11 @@
                     <th scope="col">Fullname</th>
                     <th scope="col">PhoneNumber</th>
                     <th scope="col">PhoneCompany</th>
+                    <th scope="col">Balance</th>
                 </tr>
                 </thead>
                 <#assign count = 1>
-                <#list phoneUserInfo.phoneInfo as key, value>
+                <#list phoneUserInfo.phoneInfoSet as phoneInfo>
                     <tr>
                         <#if count == 1 >
                             <th scope="row">${count}</th>
@@ -60,11 +62,51 @@
                             <th scope="row"></th>
                             <td></td>
                         </#if>
-                        <td>${key}</td>
-                        <td>${value}</td>
+                        <td>${phoneInfo.phoneNumber}</td>
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-light dropdown-toggle" href="#" role="button"
+                                   id="dropdownMenuLink"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ${phoneInfo.phoneCompany}
+                                </a>
+                                <div class="dropdown-menu">
+                                    <#-- Form to change phone company-->
+                                    <form name="PhoneInfo" class="px-4 py-3" action="/change_operator" method="post">
+                                        <p>
+                                            <i>Change of operator has a fee of <b>10$</b></i>
+                                        </p>
+                                        <#if (phoneInfo.balance < 10)>
+                                            <p>
+                                                <i style="color: red">You don't have enough founds to perform this
+                                                    operation</i>
+                                            </p>
+                                        </#if>
+
+                                        <#-- divider-->
+                                        <div class="dropdown-divider"></div>
+                                        <div class="form-group">
+                                            <!-- hidden element phone number-->
+                                            <input type="hidden" name="phoneNumber" class="form-control"
+                                                   value="${phoneInfo.phoneNumber}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- showed element phone operator-->
+                                            <label for="selectOperators">New operator</label>
+                                            <select name="phoneCompany" class="form-control" id="selectOperators">
+                                                <#list operators as operator>
+                                                    <option>${operator}</option>
+                                                </#list>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${phoneInfo.balance}$</td>
                     </tr>
                 </#list>
-
             </table>
         </div>
     <#else>
