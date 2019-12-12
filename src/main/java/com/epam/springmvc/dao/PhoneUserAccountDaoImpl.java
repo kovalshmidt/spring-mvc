@@ -46,22 +46,23 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
 
     @Override
     public void update(PhoneUserAccount phoneUserAccount) {
-        String sql = "UPDATE phoneUserAccount SET phoneNumber = ?, user_id = ?, phoneCompany_id = ? WHERE id = ?";
+        String sql = "UPDATE phoneUserAccount SET phoneNumber = ?, user_id = ?, phoneCompany_id = ?, amount = ? WHERE id = ?";
         jdbcTemplate.update(sql, phoneUserAccount.getPhoneNumber(), phoneUserAccount.getUserId(), phoneUserAccount.getPhoneCompanyId(),
-                phoneUserAccount.getId());
+                phoneUserAccount.getAmount(), phoneUserAccount.getId());
     }
 
     @Override
     public int save(PhoneUserAccount phoneUserAccount) {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String sql = "INSERT INTO phoneUserAccount (phoneNumber, user_id, phoneCompany_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO phoneUserAccount (phoneNumber, user_id, phoneCompany_id, amount) VALUES (?, ?, ?, ?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, phoneUserAccount.getPhoneNumber());
             ps.setLong(2, phoneUserAccount.getUserId());
             ps.setLong(3, phoneUserAccount.getPhoneCompanyId());
+            ps.setLong(4, phoneUserAccount.getAmount());
             return ps;
         }, keyHolder);
 
