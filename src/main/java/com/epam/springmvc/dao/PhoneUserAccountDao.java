@@ -23,11 +23,11 @@ public interface PhoneUserAccountDao {
 
     Set<String> getPhoneNumberValuesByUserId(int userId);
 
-    List<PhoneUserAccount> getPhoneNumberByPhoneUserId(int userPhoneId);
+    List<PhoneUserAccount> getPhoneUserAccountByUserId(int userId);
 
-    PhoneUserAccount getPhoneNumberByValue(String phoneNumberValue);
+    PhoneUserAccount getPhoneUserAccountByPhoneNumber(String phoneNumber);
 
-    int checkIfExistsByValue(String phoneNumberValue);
+    int checkIfExistsByPhoneNumber(String phoneNumber);
 
     int getNumberOfPhonesNumbersByUserId(int id);
 }

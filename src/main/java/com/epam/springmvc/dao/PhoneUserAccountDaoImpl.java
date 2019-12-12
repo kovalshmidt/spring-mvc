@@ -81,26 +81,26 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
     }
 
     @Override
-    public List<PhoneUserAccount> getPhoneNumberByPhoneUserId(int userPhoneId) {
+    public List<PhoneUserAccount> getPhoneUserAccountByUserId(int userId) {
         String sql = "SELECT * FROM phoneUserAccount WHERE user_id = ?";
-        return jdbcTemplate.query(sql, new PhoneUserAccountMapper(), userPhoneId);
+        return jdbcTemplate.query(sql, new PhoneUserAccountMapper(), userId);
     }
 
     @Override
-    public PhoneUserAccount getPhoneNumberByValue(String phoneNumberValue) {
+    public PhoneUserAccount getPhoneUserAccountByPhoneNumber(String phoneNumber) {
         String sql = "SELECT * FROM phoneUserAccount WHERE phoneNumber = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new PhoneUserAccountMapper(), phoneNumberValue);
+            return jdbcTemplate.queryForObject(sql, new PhoneUserAccountMapper(), phoneNumber);
         } catch (EmptyResultDataAccessException e) {
-            log.warn("No rows found with such phone number value: " + phoneNumberValue);
+            log.warn("No rows found with such phone number value: " + phoneNumber);
             return null;
         }
     }
 
     @Override
-    public int checkIfExistsByValue(String phoneNumberValue) {
+    public int checkIfExistsByPhoneNumber(String phoneNumber) {
         String sql = "SELECT COUNT(1) FROM phoneUserAccount WHERE phoneNumber = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumberValue);
+        return jdbcTemplate.queryForObject(sql, Integer.class, phoneNumber);
     }
 
     @Override
