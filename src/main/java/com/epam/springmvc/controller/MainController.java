@@ -146,7 +146,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/change_operator", method = RequestMethod.POST)
-    public String changeOperator(@ModelAttribute PhoneUserInfo.PhoneInfo phoneInfo) {
+    public String changeOperator(@ModelAttribute PhoneUserInfo.PhoneInfo phoneInfo) throws Exception {
         phoneUserAccountService.changeMobileOperator(phoneInfo.getPhoneNumber(), phoneInfo.getPhoneCompany());
         return "redirect:user/" + loggedUserId;
     }

@@ -1,6 +1,7 @@
 package com.epam.springmvc.service;
 
 import com.epam.springmvc.dao.PhoneUserAccountDao;
+import com.epam.springmvc.exception.NotEnoughFundsException;
 import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneUserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,17 +81,21 @@ public class PhoneUserAccountServiceImpl implements PhoneUserAccountService {
     private final int CHANGE_OPERATOR_PRICE = 10;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void changeMobileOperator(String phoneNumber, String newOperator) {
+    @Transactional(rollbackFor = {NotEnoughFundsException.class, Exception.class})
+    public void changeMobileOperator(String phoneNumber, String newOperator) throws Exception {
         PhoneUserAccount phoneUserAccount = getPhoneUserAccountByPhoneNumber(phoneNumber);
-        //Check if there is enough money
         int balance = phoneUserAccount.getAmount() - CHANGE_OPERATOR_PRICE;
-        if (balance >= 0) {
 
-            //There is enough money, proceed with operator change
-            PhoneCompany phoneCompany = phoneCompanyService.getByCompanyName(newOperator);
-            phoneUserAccount.setPhoneCompanyId(phoneCompany.getId());
-            //Set the new amount after operator change
+        if (balance < 0) {
+            throw new NotEnoughFundsException(balance);
+        }
+
+        PhoneCompany phoneCompany = phoneCompanyService.getByCompanyName(newOperator);
+        int phoneCompanyId = phoneCompany.getId();
+
+        //Proceed with the operation only if the new operator does not correspond to the old one
+        if(phoneCompanyId != phoneUserAccount.getPhoneCompanyId()) {
+            phoneUserAccount.setPhoneCompanyId(phoneCompanyId);
             phoneUserAccount.setAmount(balance);
 
             phoneUserAccountDao.update(phoneUserAccount);

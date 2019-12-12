@@ -2,6 +2,7 @@ package com.epam.springmvc.controller;
 
 import com.epam.springmvc.exception.FileIsEmptyException;
 import com.epam.springmvc.exception.NotAcceptedFileFormatException;
+import com.epam.springmvc.exception.NotEnoughFundsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,5 +40,13 @@ public class GlobalExceptionHandler {
         model.addAttribute("message", message);
         model.addAttribute("exceptionMessage", ex.getMessage());
         return "exceptions/error";
+    }
+
+    @ExceptionHandler(NotEnoughFundsException.class)
+    public String handleNotEnoughFundsExceptionn(HttpServletRequest request, Exception ex) {
+        log.warn("NotAcceptedFileFormatException handler executed");
+
+        System.out.println(ex.getMessage());
+        return "redirect:change_operator";
     }
 }

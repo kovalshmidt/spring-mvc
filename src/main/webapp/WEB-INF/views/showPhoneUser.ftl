@@ -40,82 +40,84 @@
 
     <!-- Table -->
     <#if hasPhones == true>
-        <div class="row margins-top-bottom">
-            <table class="table table-bordered" style="border: 1px">
-                <thead class="thead-dark">
+    <div class="row ">
+        <div class="col-md-12 margins-top-bottom"></div>
+        <table class="table table-bordered" style="border: 1px">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fullname</th>
+                <th scope="col">PhoneNumber</th>
+                <th scope="col">PhoneCompany</th>
+                <th scope="col">Balance</th>
+            </tr>
+            </thead>
+            <#assign count = 1>
+            <#list phoneUserInfo.phoneInfoSet as phoneInfo>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Fullname</th>
-                    <th scope="col">PhoneNumber</th>
-                    <th scope="col">PhoneCompany</th>
-                    <th scope="col">Balance</th>
-                </tr>
-                </thead>
-                <#assign count = 1>
-                <#list phoneUserInfo.phoneInfoSet as phoneInfo>
-                    <tr>
-                        <#if count == 1 >
-                            <th scope="row">${count}</th>
-                            <td>${phoneUserInfo.name} ${phoneUserInfo.surname}</td>
-                            <#assign count = count + 1>
-                        <#else>
-                            <th scope="row"></th>
-                            <td></td>
-                        </#if>
-                        <td>${phoneInfo.phoneNumber}</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn btn-light dropdown-toggle" href="#" role="button"
-                                   id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    ${phoneInfo.phoneCompany}
-                                </a>
-                                <div class="dropdown-menu">
-                                    <#-- Form to change phone company-->
-                                    <form name="PhoneInfo" class="px-4 py-3" action="/change_operator" method="post">
+                    <#if count == 1 >
+                        <th scope="row">${count}</th>
+                        <td>${phoneUserInfo.name} ${phoneUserInfo.surname}</td>
+                        <#assign count = count + 1>
+                    <#else>
+                        <th scope="row"></th>
+                        <td></td>
+                    </#if>
+                    <td>${phoneInfo.phoneNumber}</td>
+                    <td>
+                        <div class="dropdown">
+                            <a class="btn btn-light dropdown-toggle" href="#" role="button"
+                               id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ${phoneInfo.phoneCompany}
+                            </a>
+                            <div class="dropdown-menu">
+                                <#-- Form to change phone company-->
+                                <form name="PhoneInfo" class="px-4 py-3" action="/change_operator" method="post">
+                                    <p>
+                                        <i>Change of operator has a fee of <b>10$</b></i>
+                                    </p>
+                                    <#if (phoneInfo.balance < 10)>
                                         <p>
-                                            <i>Change of operator has a fee of <b>10$</b></i>
+                                            <i style="color: red">You don't have enough founds to perform this
+                                                operation</i>
                                         </p>
-                                        <#if (phoneInfo.balance < 10)>
-                                            <p>
-                                                <i style="color: red">You don't have enough founds to perform this
-                                                    operation</i>
-                                            </p>
-                                        </#if>
+                                    </#if>
 
-                                        <#-- divider-->
-                                        <div class="dropdown-divider"></div>
-                                        <div class="form-group">
-                                            <!-- hidden element phone number-->
-                                            <input type="hidden" name="phoneNumber" class="form-control"
-                                                   value="${phoneInfo.phoneNumber}"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <!-- showed element phone operator-->
-                                            <label for="selectOperators">New operator</label>
-                                            <select name="phoneCompany" class="form-control" id="selectOperators">
-                                                <#list operators as operator>
-                                                    <option>${operator}</option>
-                                                </#list>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </form>
-                                </div>
+                                    <#-- divider-->
+                                    <div class="dropdown-divider"></div>
+                                    <div class="form-group">
+                                        <!-- hidden element phone number-->
+                                        <input type="hidden" name="phoneNumber" class="form-control"
+                                               value="${phoneInfo.phoneNumber}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- showed element phone operator-->
+                                        <label for="selectOperators">New operator</label>
+                                        <select name="phoneCompany" class="form-control" id="selectOperators">
+                                            <#list operators as operator>
+                                                <option>${operator}</option>
+                                            </#list>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </form>
                             </div>
-                        </td>
-                        <td>${phoneInfo.balance}$</td>
-                    </tr>
-                </#list>
-            </table>
-        </div>
-    <#else>
-        <div class="row margins-top-bottom justify-content-center">
-            <p>
-                There are no phones listed behind this user
-            </p>
-        </div>
-    </#if>
+                        </div>
+                    </td>
+                    <td>${phoneInfo.balance}$</td>
+                </tr>
+            </#list>
+        </table>
+    </div>
+</div>
+<#else>
+    <div class="row margins-top-bottom justify-content-center">
+        <p>
+            There are no phones listed behind this user
+        </p>
+    </div>
+</#if>
 
 </div>
 </body>

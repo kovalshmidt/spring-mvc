@@ -29,5 +29,5 @@ public interface PhoneUserAccountService {
 
     int getNumberOfPhonesNumbersByUserId(int id);
 
-    void changeMobileOperator(String phoneNumber, String newOperator);
+    void changeMobileOperator(String phoneNumber, String newOperator) throws Exception;
 }
