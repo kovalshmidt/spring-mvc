@@ -73,7 +73,7 @@ public class UploadServiceImpl implements UploadService {
                     //Create and save PhoneUserAccount
                     PhoneUserAccount phoneUserAccount = new PhoneUserAccount();
                     phoneUserAccount.setPhoneNumber(key);
-                    phoneUserAccount.setPhoneUserId(userId);
+                    phoneUserAccount.setUserId(userId);
                     phoneUserAccount.setPhoneCompanyId(companyId);
                     phoneUserAccountService.save(phoneUserAccount);
                 }

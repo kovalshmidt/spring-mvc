@@ -58,7 +58,7 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
             phoneUserInfo.setPhoneInfo(phoneInfo);
         }
 
-        //Find PhoneUser and set to PhoneUserInfo 'phoneUserId' and 'name' 'surname' 'email' and 'roles'
+        //Find PhoneUser and set to PhoneUserInfo 'userId' and 'name' 'surname' 'email' and 'roles'
         User user = Optional.ofNullable(userService.getById(id)).orElse(new User("", ""));
         phoneUserInfo.setPhoneUserId(user.getId());
         phoneUserInfo.setName(user.getName());

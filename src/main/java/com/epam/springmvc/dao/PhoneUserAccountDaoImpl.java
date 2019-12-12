@@ -47,7 +47,7 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
     @Override
     public void update(PhoneUserAccount phoneUserAccount) {
         String sql = "UPDATE phoneUserAccount SET phoneNumber = ?, user_id = ?, phoneCompany_id = ? WHERE id = ?";
-        jdbcTemplate.update(sql, phoneUserAccount.getPhoneNumber(), phoneUserAccount.getPhoneUserId(), phoneUserAccount.getPhoneCompanyId(),
+        jdbcTemplate.update(sql, phoneUserAccount.getPhoneNumber(), phoneUserAccount.getUserId(), phoneUserAccount.getPhoneCompanyId(),
                 phoneUserAccount.getId());
     }
 
@@ -60,7 +60,7 @@ public class PhoneUserAccountDaoImpl implements PhoneUserAccountDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, phoneUserAccount.getPhoneNumber());
-            ps.setLong(2, phoneUserAccount.getPhoneUserId());
+            ps.setLong(2, phoneUserAccount.getUserId());
             ps.setLong(3, phoneUserAccount.getPhoneCompanyId());
             return ps;
         }, keyHolder);

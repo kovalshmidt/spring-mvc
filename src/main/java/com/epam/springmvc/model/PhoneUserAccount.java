@@ -11,16 +11,16 @@ public class PhoneUserAccount {
 
     private long id;
     private String phoneNumber;
-    private int phoneUserId;
+    private int userId;
     private int phoneCompanyId;
     private BigDecimal amount;
 
     public PhoneUserAccount() {
     }
 
-    public PhoneUserAccount(String phoneNumber, int phoneUserId, int phoneCompanyId) {
+    public PhoneUserAccount(String phoneNumber, int userId, int phoneCompanyId) {
         this.phoneNumber = phoneNumber;
-        this.phoneUserId = phoneUserId;
+        this.userId = userId;
         this.phoneCompanyId = phoneCompanyId;
     }
 }
