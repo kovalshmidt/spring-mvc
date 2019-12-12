@@ -8,6 +8,8 @@ INSERT INTO users (id, name, surname, email, password, roles) VALUES (33, ' ', '
 
 INSERT INTO phoneCompany (id, companyName) VALUES (22, 'beeline');
 INSERT INTO phoneCompany (id, companyName) VALUES (23, 'vodafone');
+INSERT INTO phoneCompany (id, companyName) VALUES (24, 'lifecell');
+INSERT INTO phoneCompany (id, companyName) VALUES (25, 'kyivstar');
 
-INSERT INTO phoneUserAccount (id, phoneNumber, amount, phoneCompany_id, user_id) VALUES (27, '380534265345', 100.00, 22, 31);
-INSERT INTO phoneUserAccount (id, phoneNumber, amount, phoneCompany_id, user_id) VALUES (28, '380534265344', 200.00, 22, 32);
+INSERT INTO phoneUserAccount (id, phoneNumber, amount, phoneCompany_id, user_id) VALUES (27, '380534265345', 100, 22, 31);
+INSERT INTO phoneUserAccount (id, phoneNumber, amount, phoneCompany_id, user_id) VALUES (28, '380534265344', 20, 22, 32);

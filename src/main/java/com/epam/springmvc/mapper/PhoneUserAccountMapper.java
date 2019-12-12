@@ -13,7 +13,7 @@ public class PhoneUserAccountMapper implements RowMapper<PhoneUserAccount> {
         PhoneUserAccount phoneUserAccount = new PhoneUserAccount();
         phoneUserAccount.setId(rs.getInt("id"));
         phoneUserAccount.setPhoneNumber(rs.getString("phoneNumber"));
-        phoneUserAccount.setAmount(rs.getBigDecimal("amount"));
+        phoneUserAccount.setAmount(rs.getInt("amount"));
         phoneUserAccount.setUserId(rs.getInt("user_id"));
         phoneUserAccount.setPhoneCompanyId(rs.getInt("phoneCompany_id"));
         return phoneUserAccount;

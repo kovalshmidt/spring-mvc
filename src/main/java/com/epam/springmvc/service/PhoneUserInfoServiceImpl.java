@@ -4,10 +4,7 @@ import com.epam.springmvc.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
@@ -29,12 +26,13 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
         User phoneUser = new User(phoneUserInfo.getName(), phoneUserInfo.getSurname());
         int userId = userService.save(phoneUser);
 
-        for (Map.Entry<String, String> entry : phoneUserInfo.getPhoneInfo().entrySet()) {
-
-            PhoneCompany phoneCompany = new PhoneCompany(entry.getKey());
+        for (PhoneUserInfo.PhoneInfo phoneInfo : phoneUserInfo.getPhoneInfoSet()) {
+            PhoneCompany phoneCompany = new PhoneCompany(phoneInfo.getPhoneCompany());
             int phoneCompanyId = phoneCompanyService.save(phoneCompany);
 
-            PhoneUserAccount phoneUserAccount = new PhoneUserAccount(entry.getValue(), userId, phoneCompanyId);
+            PhoneUserAccount phoneUserAccount = new PhoneUserAccount(phoneInfo.getPhoneNumber(), phoneInfo.getBalance(),
+                    userId, phoneCompanyId);
+
             phoneUserAccountService.save(phoneUserAccount);
         }
     }
@@ -45,17 +43,18 @@ public class PhoneUserInfoServiceImpl implements PhoneUserInfoService {
 
         //Retrieve the PhoneNumbers
         List<PhoneUserAccount> phoneUserAccounts = phoneUserAccountService.getPhoneNumbersByPhoneUserId(id);
-        Map<String, String> phoneInfo = new HashMap<>();
+        Set<PhoneUserInfo.PhoneInfo> phoneInfos = new HashSet<>();
         if (phoneUserAccounts.isEmpty()) {
-            phoneUserInfo.setPhoneInfo(phoneInfo);
+            phoneUserInfo.setPhoneInfoSet(phoneInfos);
         } else {
             //Populate the phoneInfo map with 'key:phoneNumber' and 'value:companyName'
             for (PhoneUserAccount phoneUserAccount : phoneUserAccounts) {
                 String phoneNumber = phoneUserAccount.getPhoneNumber();
                 String companyName = phoneCompanyService.getById(phoneUserAccount.getPhoneCompanyId()).getCompanyName();
-                phoneInfo.put(phoneNumber, companyName);
+                int balance = phoneUserAccount.getAmount();
+                phoneInfos.add(new PhoneUserInfo.PhoneInfo(phoneNumber, companyName, balance));
             }
-            phoneUserInfo.setPhoneInfo(phoneInfo);
+            phoneUserInfo.setPhoneInfoSet(phoneInfos);
         }
 
         //Find PhoneUser and set to PhoneUserInfo 'userId' and 'name' 'surname' 'email' and 'roles'
