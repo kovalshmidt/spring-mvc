@@ -70,6 +70,13 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- SPRING TRANSACTIONS-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- FREEMARKER-->
         <dependency>
             <groupId>org.freemarker</groupId>
