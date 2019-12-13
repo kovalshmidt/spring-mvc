@@ -16,6 +16,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+
+/*
+        ----------------------------------------
+        |FullName | PhoneNumber | PhoneCompany |
+        ----------------------------------------
+        |fullName | PhoneNumber1| PhoneCompany1|
+                  ------------------------------
+        |         | PhoneNumber2| PhoneCompany2|
+                  ------------------------------
+        |         | PhoneNumber3| PhoneCompany3|
+        ----------------------------------------
+        -/-------/-------/-------/-------/-------/
+         */
 
 @Component
 public class PdfUtility {
@@ -81,10 +95,15 @@ public class PdfUtility {
         cell = new PdfPCell(new Phrase("PhoneCompany", f));
         table.addCell(cell);
 
+        //Filter the users to get only those that don't have BOOKING_MANAGER authority
         List<User> users = userService.findAll();
+//                .stream().filter(u -> !u.getRoles().contains("BOOKING_MANAGER")).collect(Collectors.toList());
         for (User user : users) {
             int userId = user.getId();
             int countOfNumbers = phoneUserAccountService.getNumberOfPhonesNumbersByUserId(userId);
+            if (countOfNumbers == 0) {
+                continue; //if the user has no phone numbers it is not showed in the phone directory
+            }
             cell = new PdfPCell(new Phrase(user.getName() + " " + user.getSurname()));
             cell.setRowspan(countOfNumbers);
             table.addCell(cell);
