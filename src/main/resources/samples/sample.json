@@ -26,6 +26,66 @@
       "phoneNumbersInfo": {
         "380730347355": "lifecell"
       }
+    },
+    {
+      "name": "Petro ",
+      "surname" : "Koltutskyj",
+      "email" : "kolt@kolt.com",
+      "phoneNumbersInfo": {
+        "380730347355": "lifecell",
+        "380990347355": "vodafone"
+      }
+    },
+    {
+      "name": "Oleh ",
+      "surname" : "Rylskyy",
+      "email" : "ryl@ryl.com",
+      "phoneNumbersInfo": {
+        "380500347355": "kyivstar",
+        "380730347355": "lifecell",
+        "380680347355": "beeline"
+      }
+    },
+    {
+      "name": "Vitaliy ",
+      "surname" : "Semenchuk",
+      "email" : "sem@sem.com",
+      "phoneNumbersInfo": {
+        "38065347355": "kyivstar"
+      }
+    },
+    {
+      "name": "Maxym ",
+      "surname" : "Petrenko",
+      "email" : "petr@petr.com",
+      "phoneNumbersInfo": {
+        "380976347355": "vodafone"
+      }
+    },
+    {
+      "name": "Ivan ",
+      "surname" : "Ivanenko",
+      "email" : "ivan@ivan.com",
+      "phoneNumbersInfo": {
+        "380505047355": "kyivstar",
+        "380730347355": "lifecell"
+      }
+    },
+    {
+      "name": "Rostyslav ",
+      "surname" : "Krit",
+      "email" : "krit@krit.com",
+      "phoneNumbersInfo": {
+        "380486372855": "vodafone"
+      }
+    },
+    {
+      "name": "Rasim ",
+      "surname" : "Brynetskyy",
+      "email" : "bryn@bryn.com",
+      "phoneNumbersInfo": {
+        "380950344355": "beeline"
+      }
     }
   ]
 }
