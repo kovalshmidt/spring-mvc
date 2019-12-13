@@ -30,7 +30,6 @@
                         <a class="nav-link" href="/users">Phone Directory</a>
                         <a class="nav-link" role="button" href="/uploadPage">Upload File</a>
                     </#if>
-                    <#--TODO: fix user id for the phone profile-->
                     <a class="nav-link" role="button" href="/user/${loggedUserId}">User phone Info</a>
                 </div>
                 <div class="navbar-right">

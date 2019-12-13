@@ -101,7 +101,7 @@ public class MainController {
     /**
      * The url to download all the phone users in pdf, accessible[BOOKING_MANAGER]
      */
-    @GetMapping(value = "/getUsersPdf") //TODO: check why the pdf looks not as expected
+    @GetMapping(value = "/getUsersPdf")
     public ResponseEntity<byte[]> getUsersPDF() throws IOException {
 
         pdfUtility.createUsersPdf();
