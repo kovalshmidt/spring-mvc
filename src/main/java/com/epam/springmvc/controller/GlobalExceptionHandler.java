@@ -2,7 +2,6 @@ package com.epam.springmvc.controller;
 
 import com.epam.springmvc.exception.FileIsEmptyException;
 import com.epam.springmvc.exception.NotAcceptedFileFormatException;
-import com.epam.springmvc.exception.NotEnoughFundsException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,11 +41,13 @@ public class GlobalExceptionHandler {
         return "exceptions/error";
     }
 
-    @ExceptionHandler(NotEnoughFundsException.class)
-    public String handleNotEnoughFundsExceptionn(HttpServletRequest request, Exception ex) {
-        log.warn("NotAcceptedFileFormatException handler executed");
+    @ExceptionHandler(Exception.class)
+    public String handleException(HttpServletRequest request, Exception ex, Model model) {
+        log.warn("tException handler executed");
 
-        System.out.println(ex.getMessage());
-        return "redirect:change_operator";
+        String message = "The file is of a wrong content type, please upload another file";
+        model.addAttribute("message", message);
+        model.addAttribute("exceptionMessage", ex.getMessage());
+        return "exceptions/error";
     }
 }

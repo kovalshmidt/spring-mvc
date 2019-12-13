@@ -1,9 +1,9 @@
 package com.epam.springmvc.service;
 
 import com.epam.springmvc.dao.PhoneUserAccountDao;
-import com.epam.springmvc.exception.NotEnoughFundsException;
 import com.epam.springmvc.model.PhoneCompany;
 import com.epam.springmvc.model.PhoneUserAccount;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class PhoneUserAccountServiceImpl implements PhoneUserAccountService {
 
@@ -81,24 +82,29 @@ public class PhoneUserAccountServiceImpl implements PhoneUserAccountService {
     private final int CHANGE_OPERATOR_PRICE = 10;
 
     @Override
-    @Transactional(rollbackFor = {NotEnoughFundsException.class, Exception.class})
-    public void changeMobileOperator(String phoneNumber, String newOperator) throws Exception {
+    @Transactional(rollbackFor = {Exception.class})
+    public void changeMobileOperator(String phoneNumber, String newOperator) {
         PhoneUserAccount phoneUserAccount = getPhoneUserAccountByPhoneNumber(phoneNumber);
         int balance = phoneUserAccount.getAmount() - CHANGE_OPERATOR_PRICE;
 
+        //Proceed with the operation only if there are enough funds to pay the operator transition
         if (balance < 0) {
-            throw new NotEnoughFundsException(balance);
+            log.warn("Not enough funds to perform phone operator transition");
+            return;
         }
 
         PhoneCompany phoneCompany = phoneCompanyService.getByCompanyName(newOperator);
         int phoneCompanyId = phoneCompany.getId();
 
         //Proceed with the operation only if the new operator does not correspond to the old one
-        if(phoneCompanyId != phoneUserAccount.getPhoneCompanyId()) {
-            phoneUserAccount.setPhoneCompanyId(phoneCompanyId);
-            phoneUserAccount.setAmount(balance);
-
-            phoneUserAccountDao.update(phoneUserAccount);
+        if (phoneCompanyId == phoneUserAccount.getPhoneCompanyId()) {
+            log.warn("The new phone operator is equal to the old one, the transition cannot be performed");
+            return;
         }
+
+        phoneUserAccount.setPhoneCompanyId(phoneCompanyId);
+        phoneUserAccount.setAmount(balance);
+
+        phoneUserAccountDao.update(phoneUserAccount);
     }
 }

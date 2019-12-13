@@ -64,8 +64,8 @@
                 </tr>
                 </thead>
                 <#list phoneUserInfos as userInfo>     <#--User-->
-                    <#assign sizePhones = userInfo.getPhoneInfo()?size>
-                    <#list userInfo.phoneInfo as key, value>     <#--  Phone - Company-->
+                    <#assign sizePhones = userInfo.getPhoneInfoSet()?size>
+                    <#list userInfo.phoneInfoSet as phoneInfo>     <#--  Phone - Company-->
                         <tr>
                         <#if countPhones == 0 >
                             <th scope="row">${count}</th>
@@ -75,8 +75,8 @@
                             <th scope="row"></th>
                             <td></td>
                         </#if>
-                        <td>${key}</td>
-                        <td>${value}</td>
+                        <td>${phoneInfo.phoneNumber}</td>
+                        <td>${phoneInfo.phoneCompany}</td>
                         <#if countPhones == 0>
                             <td rowspan= ${sizePhones}>
                                 <a class="btn btn-outline-info" role="button" href="/user/${userInfo.phoneUserId}">Get

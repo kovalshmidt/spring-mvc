@@ -101,7 +101,7 @@ public class MainController {
     /**
      * The url to download all the phone users in pdf, accessible[BOOKING_MANAGER]
      */
-    @GetMapping(value = "/getUsersPdf")
+    @GetMapping(value = "/getUsersPdf") //TODO: check why the pdf looks not as expected
     public ResponseEntity<byte[]> getUsersPDF() throws IOException {
 
         pdfUtility.createUsersPdf();
@@ -147,8 +147,11 @@ public class MainController {
 
     @RequestMapping(value = "/change_operator", method = RequestMethod.POST)
     public String changeOperator(@ModelAttribute PhoneUserInfo.PhoneInfo phoneInfo) throws Exception {
+
         phoneUserAccountService.changeMobileOperator(phoneInfo.getPhoneNumber(), phoneInfo.getPhoneCompany());
-        return "redirect:user/" + loggedUserId;
+        int phoneUserId = phoneUserAccountService.getPhoneUserAccountByPhoneNumber(phoneInfo.getPhoneNumber()).getUserId();
+
+        return "redirect:user/" + phoneUserId;
     }
 
 }
