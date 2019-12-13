@@ -1,13 +1,23 @@
-To test the upload of the app can be used internally stored sample.json in webapp/WEB-INF
+1. Spring MVC
+    To test the upload of the app can be used internally stored sample.json in webapp/WEB-INF
+    Some other requests can be tested using springmvc.http in com.epam.springmvc.utility
+    sample2.json in webapp/WEB-INF can be used to test the uploading of duplicates
 
-Some other requests can be tested using springmvc.http in com.epam.springmvc.utility
+2. Spring Security
+    Security features can be tested with the following users:
+    user with role REGISTERED_USER:
+    username: giga@giga.com
+    password: giga
 
-sample2.json in webapp/WEB-INF can be used to test the uploading of duplicates
+    user with role BOOKING_MANAGER:
+    username: admin@admin.com
+    password: admin
 
-user with role REGISTERED_USER:
-username: giga@giga.com
-password: giga
 
-user with role BOOKING_MANAGER:
-username: admin@admin.com
-password: admin
+3. Spring Transactions
+    Transactions can be tested with following user changing the operator several times in
+    "User phone Info" page by clicking on the operator name.
+
+    user with role REGISTERED_USER:
+    username: pavlik@pavlik.com
+    password: pavlik
