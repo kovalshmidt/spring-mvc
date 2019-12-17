@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+        //Check if such user exists, if it does, update
+        User userByEmail = findByEmail(user.getEmail());
+        if(userByEmail != null) {
+            update(user);
+            return userByEmail.getId();
+        }
         return userDao.save(user);
     }
 

@@ -44,6 +44,25 @@
     <!-- Additional buttons -->
     <div class="row margins-top-bottom justify-content-end">
         <div class="col-md-2">
+            <div class="align-content-end">
+                <label for="selectItems">Users on page</label>
+                <select name="numberOfItems" id="selectItems">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="align-content-end">
+                <label for="selectItems">Order</label>
+                <select name="numberOfItems" id="selectItems">
+                    <option value="asc">ASC</option>
+                    <option value="desc">DESC</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
             <div class="float-md-right">
                 <a class="btn btn-info btn-sm" role="button" href="/getUsersPdf">Download PDF</a>
             </div>
