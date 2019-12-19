@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,17 +40,14 @@ public class PdfUtility {
 
     private PhoneUserAccountService phoneUserAccountService;
     private PhoneCompanyService phoneCompanyService;
-    private UserService userService;
 
     @Autowired
-    public PdfUtility(PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService,
-                      UserService userService) {
+    public PdfUtility(PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService) {
         this.phoneUserAccountService = phoneUserAccountService;
         this.phoneCompanyService = phoneCompanyService;
-        this.userService = userService;
     }
 
-    public Document createUsersPdf() {
+    public Document createUsersPdf(List<User> users) {
         Document document = new Document();
 
         try {
@@ -65,7 +64,7 @@ public class PdfUtility {
             document.add(p);
 
             Paragraph p2 = new Paragraph();
-            p2.add(createFirstTable());
+            p2.add(createFirstTableForUsers(users));
 
             document.add(p2);
             document.close();
@@ -79,7 +78,7 @@ public class PdfUtility {
         return document;
     }
 
-    public PdfPTable createFirstTable() {
+    private PdfPTable createFirstTableForUsers(List<User> users) {
 
         PdfPTable table = new PdfPTable(3);
         PdfPCell cell;
@@ -95,9 +94,6 @@ public class PdfUtility {
         cell = new PdfPCell(new Phrase("PhoneCompany", f));
         table.addCell(cell);
 
-        //Filter the users to get only those that don't have BOOKING_MANAGER authority
-        List<User> users = userService.findAll();
-//                .stream().filter(u -> !u.getRoles().contains("BOOKING_MANAGER")).collect(Collectors.toList());
         for (User user : users) {
             int userId = user.getId();
             int countOfNumbers = phoneUserAccountService.getNumberOfPhonesNumbersByUserId(userId);

@@ -63,8 +63,10 @@ public class MainController {
     /**
      * Phone directory page with all phone users, accessible[BOOKING_MANAGER]
      */
-    @GetMapping(value = "/users")
-    public String getAllPhoneUsers(Model model) {
+    @GetMapping(value = "/users") //   /users?order=asc&number=5
+    public String getAllPhoneUsers(@RequestParam(required = false, value = "order") String order,
+                                   @RequestParam(required = false, value = "number") Integer number,
+                                   Model model) {
 
         List<PhoneUserInfo> phoneUserInfos = new ArrayList<>();
         List<Integer> usersIds = userService.findAll().stream().map(User::getId).collect(Collectors.toList());
@@ -104,7 +106,7 @@ public class MainController {
     @GetMapping(value = "/getUsersPdf")
     public ResponseEntity<byte[]> getUsersPDF() throws IOException {
 
-        pdfUtility.createUsersPdf();
+        pdfUtility.createUsersPdf(userService.findAll());
         byte[] contents = Files.readAllBytes(new File(FILE_NAME).toPath());
 
         String filename = "users.pdf";
@@ -145,7 +147,7 @@ public class MainController {
         return "homePage";
     }
 
-    @RequestMapping(value = "/change_operator", method = RequestMethod.POST)
+    @PostMapping(value = "/change_operator")
     public String changeOperator(@ModelAttribute PhoneUserInfo.PhoneInfo phoneInfo) throws Exception {
 
         phoneUserAccountService.changeMobileOperator(phoneInfo.getPhoneNumber(), phoneInfo.getPhoneCompany());
