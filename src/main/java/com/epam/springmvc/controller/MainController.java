@@ -156,4 +156,11 @@ public class MainController {
         return "redirect:user/" + phoneUserId;
     }
 
+
+    @GetMapping(value = "/rest/user/{id}", produces = "application/json")
+    public @ResponseBody
+    User getUserById(@PathVariable("id") int id) {
+
+        return userService.getById(id);
+    }
 }

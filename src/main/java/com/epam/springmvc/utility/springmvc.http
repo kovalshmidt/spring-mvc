@@ -10,3 +10,9 @@ GET {{host-url}}/users
 #Get user with id 1
 GET {{host-url}}/user/1
 ###
+
+
+#Get user with id 1 JSON
+GET {{host-url}}rest/user/31
+Accept: application/json
+###
