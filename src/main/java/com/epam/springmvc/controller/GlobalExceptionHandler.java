@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String handleException(HttpServletRequest request, Exception ex, Model model) {
-        log.warn("tException handler executed");
+        log.warn("Exception handler executed");
 
         String message = "The file is of a wrong content type, please upload another file";
         model.addAttribute("message", message);
