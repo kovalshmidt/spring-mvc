@@ -49,6 +49,7 @@
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit">Upload</button>
                     </div>
+                </div>
             </form>
         </div>
     </div>

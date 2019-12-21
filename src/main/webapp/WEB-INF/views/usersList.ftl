@@ -43,25 +43,30 @@
 
     <!-- Additional buttons -->
     <div class="row margins-top-bottom justify-content-end">
-        <div class="col-md-2">
-            <div class="align-content-end">
-                <label for="selectItems">Users on page</label>
-                <select name="numberOfItems" id="selectItems">
+        <form class="form-inline" id="updateTableForm" action="/users" method="get">
+            <div class="form-group">
+                <label for="selectNumber">Users on page</label>
+                <select name="number" id="selectNumber" onchange="myFunction()">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
+                    <option value="15">ALL</option>
                 </select>
             </div>
-        </div>
-        <div class="col-md-2">
-            <div class="align-content-end">
-                <label for="selectItems">Order</label>
-                <select name="numberOfItems" id="selectItems">
+            <div class="form-group">
+                <label for="selectOrder">Order</label>
+                <select name="order" id="selectOrder" onchange="myFunction()">
                     <option value="asc">ASC</option>
                     <option value="desc">DESC</option>
                 </select>
             </div>
-        </div>
+        </form>
+        <script>
+            function myFunction() {
+                document.getElementById('updateTableForm').submit();
+            }
+        </script>
+
         <div class="col-md-2">
             <div class="float-md-right">
                 <a class="btn btn-info btn-sm" role="button" href="/getUsersPdf">Download PDF</a>
