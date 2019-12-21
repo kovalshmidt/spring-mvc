@@ -9,6 +9,7 @@ import org.springframework.http.converter.AbstractHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +51,9 @@ public class PdfHttpMessageConverter extends AbstractHttpMessageConverter<List<U
 
     @Override
     protected void writeInternal(List<User> users, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
-        pdfUtility.createUsersPdf(users);
+        ByteArrayOutputStream os = pdfUtility.createUsersPdf(users);
+
+        outputMessage.getBody().write(os.toByteArray());
     }
 
 }
