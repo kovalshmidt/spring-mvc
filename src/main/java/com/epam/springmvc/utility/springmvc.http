@@ -12,7 +12,18 @@ GET {{host-url}}/user/1
 ###
 
 
-#Get user with id 1 JSON
-GET {{host-url}}rest/user/31
+#Get user with id 31 JSON
+GET {{host-url}}/rest/user/31
 Accept: application/json
 ###
+
+#Get user with id 31 PDF
+GET {{host-url}}/rest/user/31
+Accept: application/pdf
+###
+
+#Get user with id 1
+GET {{host-url}}/getUsersPdf
+Accept: application/pdf
+###
+

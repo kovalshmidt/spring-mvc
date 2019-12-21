@@ -1,8 +1,6 @@
 package com.epam.springmvc.config;
 
 import com.epam.springmvc.converter.PdfHttpMessageConverter;
-import com.epam.springmvc.service.UserClientService;
-import com.epam.springmvc.service.UserClientServiceImpl;
 import com.epam.springmvc.utility.PdfUtility;
 import com.epam.springmvc.viewResolvers.PdfViewResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,12 +107,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
-
-    @Bean
-    public UserClientService userClientService() {
-        return new UserClientServiceImpl(restTemplate());
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate;
     }
 
 }
