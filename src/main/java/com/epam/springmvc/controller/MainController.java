@@ -8,7 +8,6 @@ import com.epam.springmvc.service.PhoneCompanyService;
 import com.epam.springmvc.service.PhoneUserAccountService;
 import com.epam.springmvc.service.PhoneUserInfoService;
 import com.epam.springmvc.service.UserService;
-import com.epam.springmvc.utility.PdfUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,20 +17,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.epam.springmvc.utility.PdfUtility.FILE_NAME;
 
 @Controller
 public class MainController {
 
-    private PdfUtility pdfUtility;
     private PhoneUserInfoService phoneUserInfoService;
     private UserService userService;
     private PhoneCompanyService phoneCompanyService;
@@ -42,10 +36,9 @@ public class MainController {
     private static boolean isAdmin;
 
     @Autowired
-    public MainController(PdfUtility pdfUtility, PhoneUserInfoService phoneUserInfoService,
+    public MainController(PhoneUserInfoService phoneUserInfoService,
                           UserService userService, PhoneCompanyService phoneCompanyService,
                           PhoneUserAccountService phoneUserAccountService) {
-        this.pdfUtility = pdfUtility;
         this.phoneUserInfoService = phoneUserInfoService;
         this.userService = userService;
         this.phoneCompanyService = phoneCompanyService;
@@ -104,10 +97,7 @@ public class MainController {
      * The url to download all the phone users in pdf, accessible[BOOKING_MANAGER]
      */
     @GetMapping(value = "/getUsersPdf")
-    public ResponseEntity<byte[]> getUsersPDF() throws IOException {
-
-        pdfUtility.createUsersPdf(userService.findAll());
-        byte[] contents = Files.readAllBytes(new File(FILE_NAME).toPath());
+    public ResponseEntity<List<User>> getUsersPDF() {
 
         String filename = "users.pdf";
 
@@ -116,7 +106,7 @@ public class MainController {
         headers.setContentDispositionFormData(filename, filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        return new ResponseEntity<>(contents, headers, HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(), headers, HttpStatus.OK);
     }
 
     /**
@@ -156,11 +146,23 @@ public class MainController {
         return "redirect:user/" + phoneUserId;
     }
 
+    /**
+     * For RestClient
+     */
+    @ResponseBody
+    @GetMapping(value = "/rest/user/{id}", headers = "Accept=application/json, application/pdf")
+    public List<User> getUser(@PathVariable("id") int id) {
 
-    @GetMapping(value = "/rest/user/{id}", produces = "application/json")
-    public @ResponseBody
-    User getUserById(@PathVariable("id") int id) {
+        return Collections.singletonList(userService.getById(id));
+    }
 
-        return userService.getById(id);
+    /**
+     * For RestClient
+     */
+    @ResponseBody
+    @GetMapping(value = "/rest/users", headers = "Accept=application/json, application/pdf")
+    public List<User> getUsers() {
+
+        return userService.findAll();
     }
 }
