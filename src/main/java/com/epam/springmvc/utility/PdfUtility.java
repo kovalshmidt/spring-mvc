@@ -4,7 +4,6 @@ import com.epam.springmvc.model.PhoneUserAccount;
 import com.epam.springmvc.model.User;
 import com.epam.springmvc.service.PhoneCompanyService;
 import com.epam.springmvc.service.PhoneUserAccountService;
-import com.epam.springmvc.service.UserService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -12,48 +11,40 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /*
         ----------------------------------------
         |FullName | PhoneNumber | PhoneCompany |
         ----------------------------------------
-        |fullName | PhoneNumber1| PhoneCompany1|
+        |fullName | phoneNumber1| phoneCompany1|
                   ------------------------------
-        |         | PhoneNumber2| PhoneCompany2|
+        |         | phoneNumber2| phoneCompany2|
                   ------------------------------
-        |         | PhoneNumber3| PhoneCompany3|
+        |         | phoneNumber3| phoneCompany3|
         ----------------------------------------
         -/-------/-------/-------/-------/-------/
-         */
+*/
 
 @Component
 public class PdfUtility {
 
-    public static final String FILE_NAME = "itext.pdf";
-
+    @Autowired
     private PhoneUserAccountService phoneUserAccountService;
+    @Autowired
     private PhoneCompanyService phoneCompanyService;
 
-    @Autowired
-    public PdfUtility(PhoneUserAccountService phoneUserAccountService, PhoneCompanyService phoneCompanyService) {
-        this.phoneUserAccountService = phoneUserAccountService;
-        this.phoneCompanyService = phoneCompanyService;
+    public PdfUtility() {
     }
 
-    public Document createUsersPdf(List<User> users) {
+    public ByteArrayOutputStream createUsersPdf(List<User> users) {
         Document document = new Document();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         try {
 
-            PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
-
+            PdfWriter.getInstance(document, os);
             document.open();
 
             Paragraph p = new Paragraph();
@@ -71,14 +62,14 @@ public class PdfUtility {
 
             System.out.println("Pdf created");
 
-        } catch (DocumentException | IOException e) {
+        } catch (DocumentException e) {
             e.printStackTrace();
         }
 
-        return document;
+        return os;
     }
 
-    private PdfPTable createFirstTableForUsers(List<User> users) {
+    public PdfPTable createFirstTableForUsers(List<User> users) {
 
         PdfPTable table = new PdfPTable(3);
         PdfPCell cell;
