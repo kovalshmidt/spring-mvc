@@ -45,20 +45,23 @@
     <div class="row margins-top-bottom justify-content-end">
         <form class="form-inline" id="updateTableForm" action="/users" method="get">
             <div class="form-group">
-                <label for="selectNumber">Users on page</label>
-                <select name="number" id="selectNumber" onchange="myFunction()">
+                <label for="selectLimit">Users on page</label>
+                <select name="limit" id="selectLimit">
+                    <option value="">ALL</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
-                    <option value="15">ALL</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="selectOrder">Order</label>
-                <select name="order" id="selectOrder" onchange="myFunction()">
+                <select name="order" id="selectOrder">
                     <option value="asc">ASC</option>
                     <option value="desc">DESC</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">Update table</button>
             </div>
         </form>
         <script>

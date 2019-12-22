@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,15 +57,27 @@ public class MainController {
     /**
      * Phone directory page with all phone users, accessible[BOOKING_MANAGER]
      */
-    @GetMapping(value = "/users") //   /users?order=asc&number=5
+    @GetMapping(value = "/users") //   /users?order=asc&limit=5
     public String getAllPhoneUsers(@RequestParam(required = false, value = "order") String order,
-                                   @RequestParam(required = false, value = "number") Integer number,
+                                   @RequestParam(required = false, value = "limit") Integer limit,
                                    Model model) {
 
         List<PhoneUserInfo> phoneUserInfos = new ArrayList<>();
-        List<Integer> usersIds = userService.findAll().stream().map(User::getId).collect(Collectors.toList());
+        order = order == null ? "ASC" : order;
+        List<User> all = userService.findAll();
+        List<Integer> usersIds = all.stream().map(User::getId).collect(Collectors.toList());
         for (Integer id : usersIds) {
             phoneUserInfos.add(phoneUserInfoService.createByUserId(id));
+        }
+
+        //Order
+        phoneUserInfos.sort(order.equalsIgnoreCase("ASC")
+                ? Comparator.comparing(PhoneUserInfo::getName)
+                : Comparator.comparing(PhoneUserInfo::getName).reversed());
+        //Limit
+        if(limit != null) {
+            phoneUserInfos = phoneUserInfos.stream().filter(p -> !p.getPhoneInfoSet().isEmpty()) // Show only users with phone numbers
+                    .limit(limit).collect(Collectors.toList());
         }
 
         model.addAttribute("phoneUserInfos", phoneUserInfos);
