@@ -2,8 +2,10 @@ package com.epam.springmvc.controller;
 
 
 import com.epam.springmvc.model.PhoneCompany;
+import com.epam.springmvc.model.PhoneUserAccount;
 import com.epam.springmvc.model.PhoneUserInfo;
 import com.epam.springmvc.model.User;
+import com.epam.springmvc.model.viewmodel.UserViewModel;
 import com.epam.springmvc.service.PhoneCompanyService;
 import com.epam.springmvc.service.PhoneUserAccountService;
 import com.epam.springmvc.service.PhoneUserInfoService;
@@ -70,18 +72,25 @@ public class MainController {
             phoneUserInfos.add(phoneUserInfoService.createByUserId(id));
         }
 
+        // Show only users with phone numbers
+        phoneUserInfos = phoneUserInfos.stream().filter(p -> !p.getPhoneInfoSet().isEmpty()).collect(Collectors.toList());
+
         //Order
         phoneUserInfos.sort(order.equalsIgnoreCase("ASC")
-                ? Comparator.comparing(PhoneUserInfo::getName)
-                : Comparator.comparing(PhoneUserInfo::getName).reversed());
+                ? Comparator.comparing(PhoneUserInfo::getName, String.CASE_INSENSITIVE_ORDER)
+                : Comparator.comparing(PhoneUserInfo::getName, String.CASE_INSENSITIVE_ORDER).reversed());
+
         //Limit
         if(limit != null) {
-            phoneUserInfos = phoneUserInfos.stream().filter(p -> !p.getPhoneInfoSet().isEmpty()) // Show only users with phone numbers
-                    .limit(limit).collect(Collectors.toList());
+            phoneUserInfos = phoneUserInfos.stream().limit(limit).collect(Collectors.toList());
         }
 
-        model.addAttribute("phoneUserInfos", phoneUserInfos);
+        //All operators
+        List<String> operators = phoneCompanyService.findAll().stream()
+                .map(PhoneCompany::getCompanyName).collect(Collectors.toList());
 
+        model.addAttribute("phoneUserInfos", phoneUserInfos);
+        model.addAttribute("operators", operators);
         model.addAttribute("admin", isAdmin);
         model.addAttribute("loggedUserId", loggedUserId);
         return "usersList";
@@ -177,5 +186,28 @@ public class MainController {
     public List<User> getUsers() {
 
         return userService.findAll();
+    }
+
+    /**
+     * The url to send data with credentials of a new user
+     */
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public String signUp(@ModelAttribute UserViewModel userViewModel) {
+        User user = new User();
+        user.setName(userViewModel.getName());
+        user.setSurname(userViewModel.getSurname());
+        user.setEmail(userViewModel.getEmail());
+
+        int userId = userService.save(user);
+
+        PhoneUserAccount phoneUserAccount = new PhoneUserAccount();
+        phoneUserAccount.setPhoneNumber(userViewModel.getPhoneNumber());
+        phoneUserAccount.setUserId(userId);
+        phoneUserAccount.setAmount(userViewModel.getAmount());
+        phoneUserAccount.setPhoneCompanyId(phoneCompanyService.getByCompanyName(userViewModel.getPhoneCompany()).getId());
+
+        phoneUserAccountService.save(phoneUserAccount);
+
+        return "redirect:/users";
     }
 }

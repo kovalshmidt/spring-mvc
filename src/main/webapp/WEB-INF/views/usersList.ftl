@@ -7,8 +7,9 @@
     <#--    Styles-->
     <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
-    <#--     Scripts-->
+    <#--    Scripts-->
     <script src="/resources/js/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="/resources/js/popper.js" type="text/javascript"></script>
     <script src="/resources/js/bootstrap.js" type="text/javascript"></script>
 </head>
 <body>
@@ -42,33 +43,82 @@
     </nav>
 
     <!-- Additional buttons -->
-    <div class="row margins-top-bottom justify-content-end">
-        <form class="form-inline" id="updateTableForm" action="/users" method="get">
-            <div class="form-group">
-                <label for="selectLimit">Users on page</label>
-                <select name="limit" id="selectLimit">
-                    <option value="">ALL</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                </select>
+    <div class="row margins-top-bottom justify-content-between">
+        <div class="col-md-2">
+            <div class="float-md-left">
+                <div class="dropdown">
+                    <a class="btn btn-success btn-sm dropdown-toggle" href="#" role="button"
+                       id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add User
+                    </a>
+                    <div class="dropdown-menu">
+                        <#-- Form add new user-->
+                        <div class="centered-form">
+                            <form name="userViewModel" class="px-4 py-3" action="/addUser" method="post">
+                                <h2 class="text-center">New User</h2>
+                                <div class="form-group">
+                                    <input name="name" type="text" class="form-control" placeholder="Name"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input name="surname" type="text" class="form-control" placeholder="Surname"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input name="email" type="email" class="form-control" placeholder="Email"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input name="phoneNumber" type="text" class="form-control" placeholder="PhoneNumber"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <!-- showed element phone operator-->
+                                    <label for="selectOperators">Operator</label>
+                                    <select name="phoneCompany" class="form-control" id="selectOperators">
+                                        <#list operators as operator>
+                                            <option>${operator}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input name="amount" type="text" class="form-control" placeholder="Amount"
+                                           required="required">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="selectOrder">Order</label>
-                <select name="order" id="selectOrder">
-                    <option value="asc">ASC</option>
-                    <option value="desc">DESC</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-sm">Update table</button>
-            </div>
-        </form>
-        <script>
-            function myFunction() {
-                document.getElementById('updateTableForm').submit();
-            }
-        </script>
+        </div>
+
+        <div class="col-md-8 justify-content-start">
+            <form class="form-inline" id="updateTableForm" action="/users" method="get">
+                <div class="form-group" style="padding-right: 5px">
+                    <label for="selectLimit" style="padding-right: 5px">Users on page</label>
+                    <select name="limit" id="selectLimit">
+                        <option value="">ALL</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                    </select>
+                </div>
+                <div class="form-group" style="padding-right: 10px">
+                    <label for="selectOrder" style="padding-right: 5px">Order</label>
+                    <select name="order" id="selectOrder">
+                        <option value="asc">ASC</option>
+                        <option value="desc">DESC</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm">Update table</button>
+                </div>
+            </form>
+        </div>
 
         <div class="col-md-2">
             <div class="float-md-right">
