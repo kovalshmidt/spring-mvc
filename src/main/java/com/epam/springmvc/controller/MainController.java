@@ -107,7 +107,7 @@ public class MainController {
                 .map(PhoneCompany::getCompanyName).collect(Collectors.toList());
 
         model.addAttribute("phoneUserInfo", phoneUserInfo);
-        model.addAttribute("hasPhones", phoneUserInfo.getPhoneUserId() != 0);
+        model.addAttribute("hasPhones", !phoneUserInfo.getPhoneInfoSet().isEmpty());
         model.addAttribute("operators", operators);
 
         model.addAttribute("admin", isAdmin);
@@ -191,8 +191,8 @@ public class MainController {
     /**
      * The url to send data with credentials of a new user
      */
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String signUp(@ModelAttribute UserViewModel userViewModel) {
+    @PostMapping(value = "/addUser")
+    public String addUser(@ModelAttribute UserViewModel userViewModel) {
         User user = new User();
         user.setName(userViewModel.getName());
         user.setSurname(userViewModel.getSurname());
@@ -209,5 +209,17 @@ public class MainController {
         phoneUserAccountService.save(phoneUserAccount);
 
         return "redirect:/users";
+    }
+
+    @PostMapping(value = "/updateUser")
+    public String updateUser(@ModelAttribute UserViewModel userViewModel) {
+
+        User user = userService.findByEmail(userViewModel.getEmail());
+        user.setName(userViewModel.getName());
+        user.setSurname(userViewModel.getSurname());
+
+        userService.update(user);
+
+        return "redirect:user/" + user.getId();
     }
 }
