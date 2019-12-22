@@ -21,3 +21,12 @@
     user with role REGISTERED_USER:
     username: pavlik@pavlik.com
     password: pavlik
+
+4. Spring Web Services
+    login with log: admin@admin pass: "admin"
+
+    - (Admin) Adding user: green dropdown button in "Phone Directory" page
+    - Edit User: by clicking "Get info" on the user, opens "User phone info" page where there is an orange button to edit name and surname of the user
+    - HttpMessageConverter implemented in com.epam.springmvc.converter.PdfHttpMessageConverter
+    - ContentNegotiationViewResolver configured in com.epam.springmvc.config.WebConfig
+    - Implemented a est client with Rest Template in com.epam.springmvc.RestClient with JSON and PDF requests
