@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <spring.version>5.2.1.RELEASE</spring.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -60,14 +60,14 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>${spring.version}</version>
+            <version>5.2.1.RELEASE</version>
         </dependency>
 
         <!-- SPRING  SECURITY CONFIG-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>${spring.version}</version>
+            <version>5.2.1.RELEASE</version>
         </dependency>
 
         <!-- SPRING TRANSACTIONS-->
